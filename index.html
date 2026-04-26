@@ -19,6 +19,40 @@
     <link rel="stylesheet" href="assets/css/site.css">
   </head>
   <body>
+    <aside class="section-indicator" aria-label="Page sections">
+      <ol>
+        <li>
+          <a href="#hero" data-section="hero" data-index="0">
+            <span class="indicator-index">01</span>
+            <span class="indicator-label">Overview</span>
+          </a>
+        </li>
+        <li>
+          <a href="#capabilities" data-section="capabilities" data-index="1">
+            <span class="indicator-index">02</span>
+            <span class="indicator-label">Capabilities</span>
+          </a>
+        </li>
+        <li>
+          <a href="#delivery" data-section="delivery" data-index="2">
+            <span class="indicator-index">03</span>
+            <span class="indicator-label">Delivery</span>
+          </a>
+        </li>
+        <li>
+          <a href="#standards" data-section="standards" data-index="3">
+            <span class="indicator-index">04</span>
+            <span class="indicator-label">Standards</span>
+          </a>
+        </li>
+        <li>
+          <a href="#contact" data-section="contact" data-index="4">
+            <span class="indicator-index">05</span>
+            <span class="indicator-label">Contact</span>
+          </a>
+        </li>
+      </ol>
+    </aside>
     <header class="site-header">
       <a class="brand" href="/" aria-label="Mizumoto Tech home">
         <span class="brand-mark" aria-hidden="true">MT</span>
@@ -34,7 +68,7 @@
     </header>
 
     <main>
-      <section class="hero" aria-labelledby="hero-title">
+      <section class="hero" id="hero" aria-labelledby="hero-title">
         <div class="hero-visual" aria-hidden="true">
           <div class="signal-orbit orbit-one"></div>
           <div class="signal-orbit orbit-two"></div>
@@ -166,5 +200,64 @@
         <a href="#standards">Standards</a>
       </div>
     </footer>
+
+    <script>
+      const indicator = document.querySelector('.section-indicator');
+      const indicatorLinks = Array.from(document.querySelectorAll('.section-indicator a'));
+      const targets = Array.from(document.querySelectorAll('section[id], footer[id]'));
+      const visibilityRatios = new Map();
+
+      const setActiveLink = (activeId) => {
+        indicatorLinks.forEach((link) => {
+          const isActive = link.getAttribute('data-section') === activeId;
+          if (isActive) {
+            link.setAttribute('data-active', 'true');
+            link.setAttribute('aria-current', 'true');
+          } else {
+            link.removeAttribute('data-active');
+            link.removeAttribute('aria-current');
+          }
+        });
+
+        const activeLink = indicatorLinks.find(
+          (link) => link.getAttribute('data-section') === activeId
+        );
+        if (!indicator || !activeLink) {
+          return;
+        }
+
+        const activeIndex = Number(activeLink.getAttribute('data-index'));
+        const maxIndex = Math.max(indicatorLinks.length - 1, 1);
+        const progress = (activeIndex / maxIndex) * 100;
+        indicator.style.setProperty('--indicator-progress', `${progress}%`);
+      };
+
+      setActiveLink('hero');
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            visibilityRatios.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0);
+          });
+
+          let bestId = 'hero';
+          let bestRatio = 0;
+          visibilityRatios.forEach((ratio, id) => {
+            if (ratio > bestRatio) {
+              bestRatio = ratio;
+              bestId = id;
+            }
+          });
+          setActiveLink(bestId);
+        },
+        {
+          root: null,
+          rootMargin: '-24% 0px -52% 0px',
+          threshold: [0, 0.2, 0.4, 0.6, 0.8, 1]
+        }
+      );
+
+      targets.forEach((target) => observer.observe(target));
+    </script>
   </body>
 </html>
