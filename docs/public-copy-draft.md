@@ -10,14 +10,19 @@ are complete.
 Use a Japan-led delivery position without presenting the company as a generic
 offshore outsourcing shop.
 
+Use `Mizumoto Tech` consistently for the homepage, footer, metadata, and Open
+Graph title.
+
 The public message should be:
 
 - Japan-side senior engineering judgment is the core value.
 - Security-sensitive work requires Japan-side handling, strict access
   boundaries, or separate client approval.
-- Lower-sensitivity implementation work may use a blended delivery model when
-  the scope and risk profile allow it.
+- Lower-sensitivity implementation support may be scoped separately in future
+  engagements when delivery boundaries and risk profile allow it.
 - Cost flexibility is available only where the delivery risk is low enough.
+- Public copy should not imply an established delivery team, domestic hiring,
+  or standing delivery capacity unless that operating model exists.
 
 Avoid:
 
@@ -33,13 +38,14 @@ Avoid:
 
 Japan-led cloud reliability engineering for modern teams
 
-We help teams improve cloud infrastructure, delivery workflows, and
-operational reliability with Japan-side senior engineering oversight.
+Mizumoto Tech helps teams strengthen cloud infrastructure, delivery workflows,
+and operational reliability through Japan-side senior engineering leadership
+and carefully scoped delivery support.
 
 Security-sensitive work requires direct Japan-side handling, strict access
-boundaries, or separate client approval. For well-scoped, lower-sensitivity
-implementation tasks, a blended delivery model may be considered case by case
-to improve cost efficiency.
+boundaries, or separate client approval. Selected lower-sensitivity
+implementation support may be scoped separately in future engagements,
+depending on delivery boundaries and risk profile.
 
 Book an intro call
 
@@ -49,24 +55,24 @@ Mizumoto Tech is a Japan-led engineering practice for teams that need practical
 cloud operations support, clearer delivery workflows, and more reliable
 infrastructure foundations.
 
-The value is not volume staffing. The value is technical judgment, disciplined
-execution, and clear delivery boundaries.
+The core value is technical judgment, disciplined execution, and clear delivery
+boundaries.
 
-We work best with teams that need a senior engineering partner to define the
-right baseline first, then deliver work that is maintainable, reviewable, and
-transferable.
+This model works best for teams that need a senior engineering partner to
+define the right baseline first, then deliver work that is maintainable,
+reviewable, and transferable.
 
-### What We Help With
+### What Mizumoto Tech Helps With
 
-- Cloud infrastructure foundation
+- Cloud infrastructure foundations
 - CI/CD and release workflow improvement
-- Reliability and operational readiness
+- Operational reliability and readiness
 - Infrastructure review and risk reduction
-- Documentation, runbooks, and handover assets
+- Documentation, runbooks, and handover support
 
 ### Delivery Model
 
-Japan-side leadership
+Japan-side senior engineering leadership
 
 High-sensitivity or high-accountability work requires Japan-side senior
 engineering involvement. This includes workstreams that involve production
@@ -75,22 +81,22 @@ client-specific security requirements.
 
 Blended delivery
 
-For selected lower-sensitivity tasks, a blended delivery model may be discussed
-when the work is clearly scoped, repeatable, and operationally low-risk.
+Selected lower-sensitivity implementation support may be scoped separately in
+future engagements, depending on delivery boundaries and risk profile.
 
-This model is designed to improve cost efficiency without weakening the
+This path is intended to improve cost efficiency without weakening the
 engineering standard or changing the agreed access boundaries.
 
 Commercial note
 
-Japan-side senior engineering support starts at USD 50/hour, depending on the
-scope, urgency, and response expectations. Lower-sensitivity implementation
+Commercial terms are scoped based on the engagement model, delivery
+boundaries, and response expectations. Lower-sensitivity implementation
 support may be scoped separately when the risk profile and client requirements
 allow it.
 
-### Why Teams Work With Us
+### Why Teams Work With Mizumoto Tech
 
-- Japan-side senior engineering oversight
+- Japan-side senior engineering leadership
 - Practical operator mindset
 - Clear access and delivery boundaries
 - Cost flexibility where the risk profile allows it
@@ -109,11 +115,11 @@ matters.
 
 Mizumoto Tech 面向成长型技术团队，提供云基础设施、交付流程和运维可靠性方面的工程支持。
 
-我们的核心价值不是泛化人力外包，而是日本侧资深工程判断、清晰交付边界和可落地的技术执行。
+Mizumoto Tech 的价值不在于堆人力，而在于日本侧资深工程判断、清晰交付边界和可落地的技术执行。
 
 对于涉及生产访问、客户环境信息、敏感日志、权限体系或合规要求的工作，默认需要日本侧直接参与、严格访问边界，或经过客户单独确认。
 
-对于边界清晰、低敏感性、可重复的执行型任务，可在风险允许的前提下，按项目情况讨论更具成本效率的协同交付方式。
+对于边界清晰、低敏感、可重复执行的工作，未来可根据交付边界和风险等级，按项目情况单独评估协同交付方式。
 
 ### 服务方向
 
@@ -127,7 +133,7 @@ Mizumoto Tech 面向成长型技术团队，提供云基础设施、交付流程
 
 日本侧主导
 
-关键工作由日本侧资深工程能力负责把关，包括架构判断、风险识别、交付边界定义和敏感工作流处理。
+关键工作由日本侧资深工程人员直接把关，包括架构判断、风险识别、交付边界定义和敏感工作流处理。
 
 风险分级
 
@@ -135,11 +141,11 @@ Mizumoto Tech 面向成长型技术团队，提供云基础设施、交付流程
 
 协同交付
 
-在客户确认、边界清晰、风险可控的前提下，部分低敏感执行任务可采用协同交付模式，以降低整体交付成本。
+在客户确认、边界清晰、风险可控的前提下，部分低敏感执行任务未来可按项目情况评估协同交付方式。
 
 ### 商务说明
 
-日本侧资深工程支持的标准费率从 USD 50/hour 起，具体取决于范围、响应要求和交付责任。
+商务条款会根据合作模式、交付边界、响应要求和风险等级单独评估。
 
 低敏感执行型工作如适合协同交付，可按项目情况单独评估更具成本效率的报价方式。
 
@@ -150,12 +156,16 @@ Mizumoto Tech 面向成长型技术团队，提供云基础设施、交付流程
 ## Fact Checks Before Publishing
 
 - Confirm whether "Tokyo-led" or "Japan-side" is the correct public wording.
-- Confirm whether the public brand should be "Mizumoto" or "Mizumoto Tech".
-- Confirm whether USD 50/hour is approved for public display.
+- Confirm whether any legal footer name is required in addition to the public
+  brand `Mizumoto Tech`.
+- Confirm whether pricing should remain private, move to a separate pricing
+  page, or be disclosed only in proposals.
 - Confirm whether any blended delivery partner or domestic execution path
   already exists. If not, keep the wording as "may be discussed" or
   "case by case".
 - Confirm that no page implies a larger team, legal entity, certification,
   partnership, or compliance guarantee than actually exists.
+- Confirm that no page implies established domestic hiring or standing
+  domestic delivery capacity unless that operating model exists.
 - Confirm that any cross-border delivery statement is consistent with client
   contracts and applicable data handling requirements.
