@@ -212,6 +212,17 @@ h3 {
   font-size: 15px;
 }
 
+.credential-line {
+  display: inline-flex;
+  max-width: 680px;
+  margin: 2px 0 20px;
+  padding: 10px 12px;
+  border-left: 2px solid var(--accent);
+  background: rgba(67, 217, 195, 0.08);
+  color: #c8ddd9;
+  font-size: 14px;
+}
+
 .hero-actions {
   display: flex;
   flex-wrap: wrap;

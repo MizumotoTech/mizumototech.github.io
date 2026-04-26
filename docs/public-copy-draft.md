@@ -39,8 +39,11 @@ Avoid:
 Japan-led cloud reliability engineering for modern teams
 
 Mizumoto Tech helps teams strengthen cloud infrastructure, delivery workflows,
-and operational reliability through Japan-side senior engineering leadership
+and operational reliability through Japan-side senior engineering oversight
 and carefully scoped delivery support.
+
+Led by a U.S.-trained engineer with a computer science master's background and
+hands-on cloud operations experience.
 
 Security-sensitive work requires direct Japan-side handling, strict access
 boundaries, or separate client approval. Selected lower-sensitivity
@@ -72,7 +75,7 @@ reviewable, and transferable.
 
 ### Delivery Model
 
-Japan-side senior engineering leadership
+Japan-side senior engineering oversight
 
 High-sensitivity or high-accountability work requires Japan-side senior
 engineering involvement. This includes workstreams that involve production
@@ -96,7 +99,7 @@ allow it.
 
 ### Why Teams Work With Mizumoto Tech
 
-- Japan-side senior engineering leadership
+- Japan-side senior engineering oversight
 - Practical operator mindset
 - Clear access and delivery boundaries
 - Cost flexibility where the risk profile allows it
@@ -160,6 +163,9 @@ Mizumoto Tech 的价值不在于堆人力，而在于日本侧资深工程判断
   brand `Mizumoto Tech`.
 - Confirm whether pricing should remain private, move to a separate pricing
   page, or be disclosed only in proposals.
+- Confirm whether the U.S.-trained / computer science master's credential
+  should be public, and whether to name the university on a separate profile
+  page.
 - Confirm whether any blended delivery partner or domestic execution path
   already exists. If not, keep the wording as "may be discussed" or
   "case by case".
