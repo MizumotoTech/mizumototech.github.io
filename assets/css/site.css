@@ -525,10 +525,10 @@ h3 {
 .service-card {
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto auto 1fr;
   column-gap: 14px;
   row-gap: 8px;
-  min-height: 214px;
+  min-height: 246px;
   align-content: start;
 }
 
@@ -576,10 +576,49 @@ h3 {
   background: rgba(240, 179, 90, 0.08);
 }
 
-.service-card > p:last-child {
+.service-card > p:not(.service-type) {
   grid-column: 1 / -1;
   padding-top: 6px;
   border-top: 1px solid rgba(205, 232, 226, 0.1);
+}
+
+.doc-link,
+.doc-link-group {
+  grid-column: 1 / -1;
+  align-self: end;
+}
+
+.doc-link {
+  display: inline-flex;
+  width: max-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  color: var(--accent-strong);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.doc-link::after {
+  content: ">";
+  color: var(--amber);
+  font-size: 12px;
+}
+
+.doc-link:hover,
+.doc-link:focus-visible {
+  color: var(--text);
+}
+
+.doc-link-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+}
+
+.doc-link-group .doc-link {
+  margin-top: 12px;
 }
 
 .primary-service {
@@ -699,6 +738,15 @@ h3 {
 .zh-panel li {
   padding-left: 14px;
   border-left: 2px solid rgba(67, 217, 195, 0.44);
+}
+
+.zh-panel a:hover,
+.zh-panel a:focus-visible {
+  color: var(--accent-strong);
+}
+
+.zh-overview {
+  margin-top: 20px;
 }
 
 .contact-section {
