@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mizumoto Tech Docs</title>
+    <meta
+      name="description"
+      content="Public Mizumoto Tech service notes, templates, and public-safe runbook examples."
+    >
+    <meta name="theme-color" content="#081113">
+    <link rel="stylesheet" href="assets/css/site.css">
+  </head>
+  <body class="doc-page">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Mizumoto Tech home">
+        <span class="brand-mark" aria-hidden="true">MT</span>
+        <span>Mizumoto Tech</span>
+      </a>
+
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <a href="/#services">Services</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main class="doc-shell">
+      <aside class="doc-sidebar" aria-label="Public documents">
+        <p class="eyebrow">Public Docs</p>
+        <nav id="doc-list"></nav>
+      </aside>
+
+      <article class="doc-reader" aria-labelledby="doc-title">
+        <div class="doc-toolbar">
+          <a class="doc-back-link" href="/">Back to site</a>
+          <a id="raw-link" class="doc-raw-link" href="#">Raw Markdown</a>
+        </div>
+        <div id="doc-status" class="doc-status">Loading document...</div>
+        <div id="doc-content" class="markdown-body" hidden></div>
+      </article>
+    </main>
+
+    <script>
+      const documents = [
+        {
+          group: 'Overview',
+          items: [
+            ['Service Positioning', 'content/imported/sre-runbooks/docs/service-positioning.md'],
+            ['服务定位', 'content/imported/sre-runbooks/docs/service-positioning_zh.md']
+          ]
+        },
+        {
+          group: 'Service Packs',
+          items: [
+            ['Architecture Review Pack', 'content/imported/sre-runbooks/services/architecture-review-pack.md'],
+            ['Terraform Foundation Pack', 'content/imported/sre-runbooks/services/terraform-foundation-pack.md'],
+            ['CI/CD Bootstrap Pack', 'content/imported/sre-runbooks/services/cicd-bootstrap-pack.md'],
+            ['Cloud Cost Hygiene Pack', 'content/imported/sre-runbooks/services/cost-hygiene-pack.md']
+          ]
+        },
+        {
+          group: '中文服务包',
+          items: [
+            ['架构评审服务包', 'content/imported/sre-runbooks/services/architecture-review-pack_zh.md'],
+            ['Terraform 基础环境服务包', 'content/imported/sre-runbooks/services/terraform-foundation-pack_zh.md'],
+            ['CI/CD 启动服务包', 'content/imported/sre-runbooks/services/cicd-bootstrap-pack_zh.md'],
+            ['云成本卫生服务包', 'content/imported/sre-runbooks/services/cost-hygiene-pack_zh.md']
+          ]
+        },
+        {
+          group: 'Templates and Examples',
+          items: [
+            ['Runbook Template', 'content/imported/sre-runbooks/templates/runbook-template.md'],
+            ['Handover Template', 'content/imported/sre-runbooks/templates/handover-template.md'],
+            ['Service Pack Template', 'content/imported/sre-runbooks/templates/service-pack-template.md'],
+            ['Terraform Foundation Baseline', 'content/imported/sre-runbooks/examples/gcp/terraform-foundation-baseline.md']
+          ]
+        },
+        {
+          group: '中文模板',
+          items: [
+            ['Runbook 模板', 'content/imported/sre-runbooks/templates/runbook-template_zh.md'],
+            ['交接模板', 'content/imported/sre-runbooks/templates/handover-template_zh.md'],
+            ['服务包模板', 'content/imported/sre-runbooks/templates/service-pack-template_zh.md']
+          ]
+        }
+      ];
+
+      const allowedPaths = new Set(documents.flatMap((group) => group.items.map((item) => item[1])));
+      const defaultPath = 'content/imported/sre-runbooks/docs/service-positioning.md';
+      const requestedPath = new URLSearchParams(window.location.search).get('doc') || defaultPath;
+      const activePath = allowedPaths.has(requestedPath) ? requestedPath : defaultPath;
+      const docList = document.querySelector('#doc-list');
+      const status = document.querySelector('#doc-status');
+      const content = document.querySelector('#doc-content');
+      const rawLink = document.querySelector('#raw-link');
+
+      const escapeHtml = (value) =>
+        value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+      const inlineMarkdown = (value) => {
+        const codeSpans = [];
+        const marked = value.replace(/`([^`]+)`/g, (_, code) => {
+          const index = codeSpans.push(`<code>${escapeHtml(code)}</code>`) - 1;
+          return `\u0000${index}\u0000`;
+        });
+
+        return escapeHtml(marked)
+          .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+          .replace(/\u0000(\d+)\u0000/g, (_, index) => codeSpans[Number(index)]);
+      };
+
+      const appendParagraph = (root, lines) => {
+        if (!lines.length) {
+          return;
+        }
+
+        const paragraph = document.createElement('p');
+        paragraph.innerHTML = inlineMarkdown(lines.join(' '));
+        root.append(paragraph);
+        lines.length = 0;
+      };
+
+      const renderMarkdown = (markdown) => {
+        const root = document.createDocumentFragment();
+        const lines = markdown.replace(/\r\n/g, '\n').split('\n');
+        const paragraphLines = [];
+        let list = null;
+        let lastListItem = null;
+        let codeBlock = null;
+
+        const flushList = () => {
+          list = null;
+          lastListItem = null;
+        };
+
+        const ensureList = (type) => {
+          if (!list || list.tagName.toLowerCase() !== type) {
+            list = document.createElement(type);
+            root.append(list);
+          }
+          return list;
+        };
+
+        lines.forEach((line) => {
+          const fenceMatch = line.match(/^```(\w+)?\s*$/);
+
+          if (codeBlock) {
+            if (fenceMatch) {
+              const pre = document.createElement('pre');
+              const code = document.createElement('code');
+              if (codeBlock.language) {
+                code.dataset.language = codeBlock.language;
+              }
+              code.textContent = codeBlock.lines.join('\n');
+              pre.append(code);
+              root.append(pre);
+              codeBlock = null;
+            } else {
+              codeBlock.lines.push(line);
+            }
+            return;
+          }
+
+          if (fenceMatch) {
+            appendParagraph(root, paragraphLines);
+            flushList();
+            codeBlock = { language: fenceMatch[1] || '', lines: [] };
+            return;
+          }
+
+          if (!line.trim()) {
+            appendParagraph(root, paragraphLines);
+            flushList();
+            return;
+          }
+
+          const headingMatch = line.match(/^(#{1,4})\s+(.+)$/);
+          if (headingMatch) {
+            appendParagraph(root, paragraphLines);
+            flushList();
+            const heading = document.createElement(`h${headingMatch[1].length}`);
+            heading.id = headingMatch[2]
+              .toLowerCase()
+              .replace(/`/g, '')
+              .replace(/[^a-z0-9\u4e00-\u9fff]+/g, '-')
+              .replace(/^-|-$/g, '');
+            heading.innerHTML = inlineMarkdown(headingMatch[2]);
+            root.append(heading);
+            return;
+          }
+
+          const unorderedMatch = line.match(/^-\s+(.+)$/);
+          const orderedMatch = line.match(/^\d+\.\s+(.+)$/);
+          if (unorderedMatch || orderedMatch) {
+            appendParagraph(root, paragraphLines);
+            const currentList = ensureList(unorderedMatch ? 'ul' : 'ol');
+            const item = document.createElement('li');
+            item.innerHTML = inlineMarkdown((unorderedMatch || orderedMatch)[1]);
+            currentList.append(item);
+            lastListItem = item;
+            return;
+          }
+
+          const continuationMatch = line.match(/^\s{2,}(.+)$/);
+          if (continuationMatch && lastListItem) {
+            lastListItem.innerHTML = `${lastListItem.innerHTML} ${inlineMarkdown(continuationMatch[1])}`;
+            return;
+          }
+
+          flushList();
+          paragraphLines.push(line.trim());
+        });
+
+        if (codeBlock) {
+          const pre = document.createElement('pre');
+          const code = document.createElement('code');
+          code.textContent = codeBlock.lines.join('\n');
+          pre.append(code);
+          root.append(pre);
+        }
+        appendParagraph(root, paragraphLines);
+        return root;
+      };
+
+      documents.forEach((group) => {
+        const section = document.createElement('section');
+        const title = document.createElement('h2');
+        const list = document.createElement('ul');
+        title.textContent = group.group;
+        group.items.forEach(([label, path]) => {
+          const item = document.createElement('li');
+          const link = document.createElement('a');
+          link.href = `docs.html?doc=${encodeURIComponent(path)}`;
+          link.textContent = label;
+          if (path === activePath) {
+            link.setAttribute('aria-current', 'page');
+          }
+          item.append(link);
+          list.append(item);
+        });
+        section.append(title, list);
+        docList.append(section);
+      });
+
+      rawLink.href = activePath;
+
+      fetch(activePath)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Document could not be loaded.');
+          }
+          return response.text();
+        })
+        .then((markdown) => {
+          content.replaceChildren(renderMarkdown(markdown));
+          const title = content.querySelector('h1');
+          if (title) {
+            title.id = 'doc-title';
+            document.title = `${title.textContent} | Mizumoto Tech Docs`;
+          }
+          status.hidden = true;
+          content.hidden = false;
+        })
+        .catch(() => {
+          status.textContent = 'This public document is not available.';
+        });
+    </script>
+  </body>
+</html>
