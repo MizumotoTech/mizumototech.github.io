@@ -643,9 +643,8 @@ h3 {
 }
 
 .entry-panel,
-.about-panel,
 .delivery-copy,
-.company-facts {
+.company-layout {
   border: 1px solid var(--line);
   background:
     linear-gradient(180deg, rgba(20, 35, 38, 0.92), rgba(14, 25, 27, 0.86)),
@@ -699,25 +698,39 @@ h3 {
   font-size: 16px;
 }
 
+.company-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+  gap: clamp(8px, 2vw, 28px);
+  align-items: stretch;
+  padding: clamp(22px, 4vw, 36px);
+}
+
+.company-layout .about-panel {
+  align-content: center;
+  padding: 0 clamp(12px, 2vw, 22px) 0 0;
+}
+
 .company-facts {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
+  align-content: start;
+  gap: 0;
   padding: 0;
-  overflow: hidden;
-  background: var(--line);
+  margin: 0;
+  border-left: 1px solid rgba(205, 232, 226, 0.14);
 }
 
 .company-facts div {
   display: grid;
-  gap: 8px;
-  min-height: 104px;
-  padding: 22px;
-  background: rgba(14, 25, 27, 0.92);
+  grid-template-columns: minmax(110px, 0.38fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  padding: 18px 0 18px clamp(18px, 3vw, 28px);
+  border-bottom: 1px solid rgba(205, 232, 226, 0.12);
 }
 
 .company-facts div:last-child {
-  grid-column: 1 / -1;
+  border-bottom: 0;
 }
 
 .company-facts dt {
@@ -730,7 +743,8 @@ h3 {
 .company-facts dd {
   margin: 0;
   color: #dcebe7;
-  font-size: 16px;
+  font-size: 15px;
+  line-height: 1.5;
 }
 
 .model-grid {
@@ -870,6 +884,24 @@ h3 {
   max-width: 760px;
   margin-bottom: 0;
   color: var(--muted);
+}
+
+.contact-panel .contact-email {
+  margin-top: 18px;
+  color: #dcebe7;
+  font-weight: 700;
+}
+
+.contact-email span {
+  color: var(--accent-strong);
+}
+
+.contact-email small {
+  display: inline-block;
+  margin-left: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .scope-note {
@@ -1185,12 +1217,23 @@ h3 {
   .contact-panel,
   .doc-shell,
   .entry-panel,
-  .company-facts {
+  .company-layout {
     grid-template-columns: 1fr;
   }
 
-  .company-facts div:last-child {
-    grid-column: auto;
+  .company-layout .about-panel {
+    padding: 0;
+  }
+
+  .company-facts {
+    border-top: 1px solid rgba(205, 232, 226, 0.14);
+    border-left: 0;
+  }
+
+  .company-facts div {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 16px 0;
   }
 
   .doc-sidebar {
