@@ -506,10 +506,15 @@ h3 {
 }
 
 .service-grid,
-.model-grid {
+.model-grid,
+.audience-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
+}
+
+.audience-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .service-card,
@@ -631,6 +636,101 @@ h3 {
 .delivery {
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
+}
+
+.entry-service {
+  border-top: 1px solid var(--line);
+}
+
+.entry-panel,
+.about-panel,
+.delivery-copy,
+.company-facts {
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(20, 35, 38, 0.92), rgba(14, 25, 27, 0.86)),
+    var(--surface);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.18);
+}
+
+.entry-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.45fr);
+  gap: clamp(20px, 4vw, 42px);
+  align-items: start;
+  padding: clamp(26px, 5vw, 44px);
+}
+
+.lead-copy {
+  max-width: 780px;
+  margin-bottom: 0;
+  color: #d2e3df;
+  font-size: 18px;
+}
+
+.deliverable-list {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.deliverable-list li {
+  padding: 12px 14px;
+  border-left: 2px solid var(--accent);
+  background: rgba(67, 217, 195, 0.08);
+  color: #dcebe7;
+  font-weight: 700;
+}
+
+.delivery-copy,
+.about-panel {
+  display: grid;
+  gap: 16px;
+  padding: clamp(26px, 5vw, 44px);
+}
+
+.delivery-copy p,
+.about-panel p {
+  max-width: 900px;
+  margin-bottom: 0;
+  color: #c8ddd9;
+  font-size: 16px;
+}
+
+.company-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  padding: 0;
+  overflow: hidden;
+  background: var(--line);
+}
+
+.company-facts div {
+  display: grid;
+  gap: 8px;
+  min-height: 104px;
+  padding: 22px;
+  background: rgba(14, 25, 27, 0.92);
+}
+
+.company-facts div:last-child {
+  grid-column: 1 / -1;
+}
+
+.company-facts dt {
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.company-facts dd {
+  margin: 0;
+  color: #dcebe7;
+  font-size: 16px;
 }
 
 .model-grid {
@@ -1071,7 +1171,8 @@ h3 {
   }
 
   .service-grid,
-  .model-grid {
+  .model-grid,
+  .audience-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1082,8 +1183,14 @@ h3 {
 
   .language-grid,
   .contact-panel,
-  .doc-shell {
+  .doc-shell,
+  .entry-panel,
+  .company-facts {
     grid-template-columns: 1fr;
+  }
+
+  .company-facts div:last-child {
+    grid-column: auto;
   }
 
   .doc-sidebar {
@@ -1109,6 +1216,12 @@ h3 {
   .site-footer {
     align-items: flex-start;
     flex-direction: column;
+  }
+}
+
+@media (min-width: 861px) and (max-width: 1040px) {
+  .audience-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
