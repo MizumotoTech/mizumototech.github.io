@@ -22,6 +22,10 @@
   </head>
   <body>
     <aside class="section-indicator" aria-label="Page sections">
+      <button class="indicator-toggle" type="button" aria-label="Collapse section navigation" aria-expanded="true">
+        <span class="toggle-expanded" aria-hidden="true">&lt;</span>
+        <span class="toggle-collapsed" aria-hidden="true">&gt;</span>
+      </button>
       <ol>
         <li>
           <a href="#hero" data-section="hero" data-index="0">
@@ -32,31 +36,43 @@
         <li>
           <a href="#support" data-section="support" data-index="1">
             <span class="indicator-index">02</span>
-            <span class="indicator-label">Teams</span>
+            <span class="indicator-label">Who We Support</span>
           </a>
         </li>
         <li>
           <a href="#entry" data-section="entry" data-index="2">
             <span class="indicator-index">03</span>
-            <span class="indicator-label">Review</span>
+            <span class="indicator-label">Entry Service</span>
           </a>
         </li>
         <li>
           <a href="#services" data-section="services" data-index="3">
             <span class="indicator-index">04</span>
-            <span class="indicator-label">Packs</span>
+            <span class="indicator-label">Service Packs</span>
           </a>
         </li>
         <li>
           <a href="#delivery" data-section="delivery" data-index="4">
             <span class="indicator-index">05</span>
-            <span class="indicator-label">Delivery</span>
+            <span class="indicator-label">Delivery Model</span>
           </a>
         </li>
         <li>
-          <a href="#company" data-section="company" data-index="5">
+          <a href="#standards" data-section="standards" data-index="5">
             <span class="indicator-index">06</span>
+            <span class="indicator-label">Operating Principles</span>
+          </a>
+        </li>
+        <li>
+          <a href="#company" data-section="company" data-index="6">
+            <span class="indicator-index">07</span>
             <span class="indicator-label">Company</span>
+          </a>
+        </li>
+        <li>
+          <a href="#contact" data-section="contact" data-index="7">
+            <span class="indicator-index">08</span>
+            <span class="indicator-label">Contact</span>
           </a>
         </li>
       </ol>
@@ -73,6 +89,7 @@
         <a href="#services">Service Packs</a>
         <a href="#delivery">Delivery</a>
         <a href="#company">Company</a>
+        <a href="#contact">Contact</a>
         <a href="zh.html" lang="zh-Hans">中文</a>
       </nav>
     </header>
@@ -360,6 +377,7 @@
 
     <script>
       const indicator = document.querySelector('.section-indicator');
+      const indicatorToggle = document.querySelector('.indicator-toggle');
       const indicatorLinks = Array.from(document.querySelectorAll('.section-indicator a'));
       const indicatorSections = new Set(
         indicatorLinks.map((link) => link.getAttribute('data-section'))
@@ -368,6 +386,31 @@
         indicatorSections.has(target.id)
       );
       const visibilityRatios = new Map();
+      const indicatorStorageKey = 'mizumoto-section-indicator-collapsed';
+
+      const setIndicatorCollapsed = (isCollapsed) => {
+        document.body.dataset.indicatorCollapsed = String(isCollapsed);
+        if (!indicator || !indicatorToggle) {
+          return;
+        }
+        indicator.dataset.collapsed = String(isCollapsed);
+        indicatorToggle.setAttribute('aria-expanded', String(!isCollapsed));
+        indicatorToggle.setAttribute(
+          'aria-label',
+          isCollapsed ? 'Expand section navigation' : 'Collapse section navigation'
+        );
+      };
+
+      const savedIndicatorState = localStorage.getItem(indicatorStorageKey);
+      setIndicatorCollapsed(savedIndicatorState === 'true');
+
+      if (indicatorToggle) {
+        indicatorToggle.addEventListener('click', () => {
+          const nextState = indicator?.dataset.collapsed !== 'true';
+          setIndicatorCollapsed(nextState);
+          localStorage.setItem(indicatorStorageKey, String(nextState));
+        });
+      }
 
       const setActiveLink = (activeId) => {
         indicatorLinks.forEach((link) => {

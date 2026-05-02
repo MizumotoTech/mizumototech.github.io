@@ -22,6 +22,10 @@
   </head>
   <body>
     <aside class="section-indicator" aria-label="页面章节">
+      <button class="indicator-toggle" type="button" aria-label="收起章节导航" aria-expanded="true">
+        <span class="toggle-expanded" aria-hidden="true">&lt;</span>
+        <span class="toggle-collapsed" aria-hidden="true">&gt;</span>
+      </button>
       <ol>
         <li>
           <a href="#hero" data-section="hero" data-index="0">
@@ -32,13 +36,13 @@
         <li>
           <a href="#support" data-section="support" data-index="1">
             <span class="indicator-index">02</span>
-            <span class="indicator-label">客户</span>
+            <span class="indicator-label">服务对象</span>
           </a>
         </li>
         <li>
           <a href="#entry" data-section="entry" data-index="2">
             <span class="indicator-index">03</span>
-            <span class="indicator-label">评审</span>
+            <span class="indicator-label">入口服务</span>
           </a>
         </li>
         <li>
@@ -50,13 +54,25 @@
         <li>
           <a href="#delivery" data-section="delivery" data-index="4">
             <span class="indicator-index">05</span>
-            <span class="indicator-label">交付</span>
+            <span class="indicator-label">交付模式</span>
           </a>
         </li>
         <li>
-          <a href="#company" data-section="company" data-index="5">
+          <a href="#standards" data-section="standards" data-index="5">
             <span class="indicator-index">06</span>
-            <span class="indicator-label">公司</span>
+            <span class="indicator-label">工作原则</span>
+          </a>
+        </li>
+        <li>
+          <a href="#company" data-section="company" data-index="6">
+            <span class="indicator-index">07</span>
+            <span class="indicator-label">公司信息</span>
+          </a>
+        </li>
+        <li>
+          <a href="#contact" data-section="contact" data-index="7">
+            <span class="indicator-index">08</span>
+            <span class="indicator-label">联系</span>
           </a>
         </li>
       </ol>
@@ -69,10 +85,12 @@
       </a>
 
       <nav class="site-nav" aria-label="主导航">
-        <a href="#entry">架构评审</a>
+        <a href="#support">服务对象</a>
+        <a href="#entry">入口服务</a>
         <a href="#services">服务包</a>
         <a href="#delivery">交付模式</a>
         <a href="#company">公司信息</a>
+        <a href="#contact">联系</a>
         <a href="https://www.mizumoto.tech">English</a>
       </nav>
     </header>
@@ -345,6 +363,7 @@
 
     <script>
       const indicator = document.querySelector('.section-indicator');
+      const indicatorToggle = document.querySelector('.indicator-toggle');
       const indicatorLinks = Array.from(document.querySelectorAll('.section-indicator a'));
       const indicatorSections = new Set(
         indicatorLinks.map((link) => link.getAttribute('data-section'))
@@ -353,6 +372,31 @@
         indicatorSections.has(target.id)
       );
       const visibilityRatios = new Map();
+      const indicatorStorageKey = 'mizumoto-section-indicator-collapsed';
+
+      const setIndicatorCollapsed = (isCollapsed) => {
+        document.body.dataset.indicatorCollapsed = String(isCollapsed);
+        if (!indicator || !indicatorToggle) {
+          return;
+        }
+        indicator.dataset.collapsed = String(isCollapsed);
+        indicatorToggle.setAttribute('aria-expanded', String(!isCollapsed));
+        indicatorToggle.setAttribute(
+          'aria-label',
+          isCollapsed ? '展开章节导航' : '收起章节导航'
+        );
+      };
+
+      const savedIndicatorState = localStorage.getItem(indicatorStorageKey);
+      setIndicatorCollapsed(savedIndicatorState === 'true');
+
+      if (indicatorToggle) {
+        indicatorToggle.addEventListener('click', () => {
+          const nextState = indicator?.dataset.collapsed !== 'true';
+          setIndicatorCollapsed(nextState);
+          localStorage.setItem(indicatorStorageKey, String(nextState));
+        });
+      }
 
       const setActiveLink = (activeId) => {
         indicatorLinks.forEach((link) => {
