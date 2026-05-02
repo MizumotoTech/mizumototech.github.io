@@ -86,14 +86,24 @@ main {
 
 .brand-mark {
   display: grid;
-  width: 34px;
+  width: 40px;
   height: 34px;
   place-items: center;
   border: 1px solid rgba(121, 255, 226, 0.48);
-  background: linear-gradient(135deg, rgba(67, 217, 195, 0.18), rgba(240, 179, 90, 0.08));
+  background:
+    linear-gradient(135deg, rgba(67, 217, 195, 0.18), rgba(240, 179, 90, 0.08)),
+    rgba(8, 17, 19, 0.72);
   color: var(--accent-strong);
   font-size: 12px;
   letter-spacing: 0;
+  overflow: hidden;
+}
+
+.brand-mark img {
+  display: block;
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
 }
 
 .site-nav {
@@ -671,31 +681,45 @@ h3 {
   max-width: 100%;
   align-items: center;
   gap: 8px;
-  margin-top: 12px;
+  min-height: 38px;
+  margin-top: 16px;
+  padding: 0 13px;
+  border: 1px solid rgba(67, 217, 195, 0.36);
+  background: rgba(67, 217, 195, 0.1);
   color: var(--accent-strong);
   font-size: 13px;
   font-weight: 800;
+  transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease, color 160ms ease;
 }
 
 .doc-link::after {
   content: ">";
   color: var(--amber);
   font-size: 12px;
+  transition: transform 160ms ease;
 }
 
 .doc-link:hover,
 .doc-link:focus-visible {
+  border-color: var(--accent-strong);
+  background: rgba(67, 217, 195, 0.16);
   color: var(--text);
+  transform: translateY(-1px);
+}
+
+.doc-link:hover::after,
+.doc-link:focus-visible::after {
+  transform: translateX(2px);
 }
 
 .doc-link-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 14px;
+  gap: 10px;
 }
 
 .doc-link-group .doc-link {
-  margin-top: 12px;
+  margin-top: 16px;
 }
 
 .primary-service {
@@ -779,8 +803,143 @@ h3 {
 }
 
 .company-layout .about-panel {
+  grid-template-columns: 1fr;
+  gap: 0;
   align-content: center;
   padding: 0 clamp(12px, 2vw, 22px) 0 0;
+}
+
+.company-overview,
+.founder-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(128px, 0.24fr);
+  gap: clamp(18px, 3vw, 30px);
+  align-items: center;
+}
+
+.company-overview {
+  padding-bottom: 22px;
+  border-bottom: 1px solid rgba(205, 232, 226, 0.12);
+}
+
+.founder-overview {
+  padding-top: 22px;
+}
+
+.company-logo-card {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 12px;
+  border: 1px solid rgba(205, 232, 226, 0.14);
+  background:
+    linear-gradient(135deg, rgba(67, 217, 195, 0.08), transparent 54%),
+    rgba(8, 17, 19, 0.36);
+  color: #dcebe7;
+  font-size: 13px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.company-logo-card span {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.company-logo-card img {
+  display: block;
+  width: 116px;
+  height: 76px;
+  object-fit: contain;
+}
+
+.founder-photo {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 3 / 5;
+  width: min(100%, 152px);
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgba(205, 232, 226, 0.16);
+  background: rgba(8, 17, 19, 0.5);
+  cursor: zoom-in;
+  font: inherit;
+}
+
+.founder-photo::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(180deg, transparent 55%, rgba(8, 17, 19, 0.36));
+  pointer-events: none;
+}
+
+.founder-photo img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: block;
+  width: auto;
+  height: 100%;
+  max-width: none;
+  transform: translateX(-50%);
+  transition: transform 180ms ease;
+}
+
+.founder-photo:hover img,
+.founder-photo:focus-visible img {
+  transform: translateX(-50%) scale(1.03);
+}
+
+.photo-dialog {
+  width: min(92vw, 760px);
+  max-height: 92vh;
+  padding: 0;
+  border: 1px solid rgba(205, 232, 226, 0.24);
+  background: #071011;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.58);
+}
+
+.photo-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(4px);
+}
+
+.photo-dialog img {
+  display: block;
+  width: 100%;
+  max-height: 92vh;
+  object-fit: contain;
+}
+
+.photo-dialog-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgba(205, 232, 226, 0.24);
+  background: rgba(8, 17, 19, 0.82);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.photo-dialog-close:hover,
+.photo-dialog-close:focus-visible {
+  border-color: var(--accent);
+  background: rgba(67, 217, 195, 0.16);
+}
+
+.about-copy {
+  display: grid;
+  gap: 16px;
 }
 
 .company-facts {
@@ -1299,6 +1458,7 @@ h3 {
   }
 
   .company-layout .about-panel {
+    grid-template-columns: 1fr;
     padding: 0;
   }
 
@@ -1375,6 +1535,24 @@ h3 {
 
   .button {
     width: 100%;
+  }
+
+  .company-layout .about-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .company-overview,
+  .founder-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .company-logo-card {
+    justify-items: start;
+    text-align: left;
+  }
+
+  .founder-photo {
+    width: 132px;
   }
 
   .doc-sidebar nav {

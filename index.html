@@ -16,6 +16,8 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mizumoto.tech/">
     <meta name="theme-color" content="#081113">
+    <link rel="icon" type="image/png" href="assets/pic/mizumototech_logo.png">
+    <link rel="apple-touch-icon" href="assets/pic/mizumototech_logo.png">
     <link rel="alternate" hreflang="zh-Hans" href="https://mizumoto.tech/zh.html">
     <link rel="alternate" hreflang="en" href="https://mizumoto.tech/">
     <link rel="stylesheet" href="assets/css/site.css">
@@ -80,7 +82,9 @@
 
     <header class="site-header">
       <a class="brand" href="/" aria-label="Mizumoto Tech home">
-        <span class="brand-mark" aria-hidden="true">MT</span>
+        <span class="brand-mark" aria-hidden="true">
+          <img src="assets/pic/mizumototech_logo.png" alt="">
+        </span>
         <span>Mizumoto Tech</span>
       </a>
 
@@ -305,16 +309,29 @@
         </div>
         <div class="company-layout">
           <div class="about-panel">
-            <p>
-              Mizumoto Tech is a Cloud Platform and SRE service brand operated by
-              Mizumoto Network Technology (Wuhan) Co., Ltd.
-            </p>
-            <p>
-              The service is led by Ruiyuan "Mizumoto" Xu, an SRE Supervisor based
-              in Japan, with hands-on experience across GCP, GKE, Kubernetes,
-              Terraform, ArgoCD, CI/CD, SLO/SLI, observability, incident response,
-              disaster recovery, IAM/IAP, and cloud cost optimization.
-            </p>
+            <div class="company-overview">
+              <p>
+                Mizumoto Tech is a Cloud Platform and SRE service brand operated by
+                Mizumoto Network Technology (Wuhan) Co., Ltd.
+              </p>
+              <div class="company-logo-card" aria-label="Mizumoto Tech">
+                <img src="assets/pic/mizumototech_logo.png" alt="">
+                <span>Mizumoto Tech</span>
+              </div>
+            </div>
+            <div class="founder-overview">
+              <div class="about-copy">
+                <p>
+                  The service is led by Ruiyuan "Mizumoto" Xu, an SRE Supervisor based
+                  in Japan, with hands-on experience across GCP, GKE, Kubernetes,
+                  Terraform, ArgoCD, CI/CD, SLO/SLI, observability, incident response,
+                  disaster recovery, IAM/IAP, and cloud cost optimization.
+                </p>
+              </div>
+              <button class="founder-photo" type="button" data-photo-open aria-label="Open larger photo of Ruiyuan Mizumoto Xu">
+                <img src="assets/pic/avatar_03_study_square.jpg" alt="Ruiyuan Mizumoto Xu">
+              </button>
+            </div>
           </div>
           <dl class="company-facts">
             <div>
@@ -374,6 +391,11 @@
         <a href="zh.html" lang="zh-Hans">中文</a>
       </div>
     </footer>
+
+    <dialog class="photo-dialog" aria-label="Ruiyuan Mizumoto Xu photo">
+      <button class="photo-dialog-close" type="button" data-photo-close aria-label="Close photo preview">Close</button>
+      <img src="assets/pic/avatar_03_study_square.jpg" alt="Ruiyuan Mizumoto Xu">
+    </dialog>
 
     <script>
       const indicator = document.querySelector('.section-indicator');
@@ -463,6 +485,20 @@
       );
 
       targets.forEach((target) => observer.observe(target));
+
+      const photoDialog = document.querySelector('.photo-dialog');
+      const photoOpen = document.querySelector('[data-photo-open]');
+      const photoClose = document.querySelector('[data-photo-close]');
+
+      if (photoDialog && photoOpen && photoClose) {
+        photoOpen.addEventListener('click', () => photoDialog.showModal());
+        photoClose.addEventListener('click', () => photoDialog.close());
+        photoDialog.addEventListener('click', (event) => {
+          if (event.target === photoDialog) {
+            photoDialog.close();
+          }
+        });
+      }
     </script>
   </body>
 </html>

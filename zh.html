@@ -16,6 +16,8 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mizumoto.tech/zh.html">
     <meta name="theme-color" content="#081113">
+    <link rel="icon" type="image/png" href="assets/pic/mizumototech_logo.png">
+    <link rel="apple-touch-icon" href="assets/pic/mizumototech_logo.png">
     <link rel="alternate" hreflang="en" href="https://mizumoto.tech/">
     <link rel="alternate" hreflang="zh-Hans" href="https://mizumoto.tech/zh.html">
     <link rel="stylesheet" href="assets/css/site.css">
@@ -80,7 +82,9 @@
 
     <header class="site-header">
       <a class="brand" href="zh.html" aria-label="Mizumoto Tech 中文首页">
-        <span class="brand-mark" aria-hidden="true">MT</span>
+        <span class="brand-mark" aria-hidden="true">
+          <img src="assets/pic/mizumototech_logo.png" alt="">
+        </span>
         <span>Mizumoto Tech</span>
       </a>
 
@@ -295,14 +299,27 @@
         </div>
         <div class="company-layout">
           <div class="about-panel">
-            <p>
-              Mizumoto Tech 是瑞元网络科技（武汉）有限公司运营的 Cloud Platform 与 SRE 服务品牌。
-            </p>
-            <p>
-              服务由在日本工作的 SRE Supervisor Ruiyuan "Mizumoto" Xu 主导，具备 GCP、GKE、
-              Kubernetes、Terraform、ArgoCD、CI/CD、SLO/SLI、可观测性、故障响应、灾难恢复、
-              IAM/IAP 与云成本优化等实战经验。
-            </p>
+            <div class="company-overview">
+              <p>
+                Mizumoto Tech 是瑞元网络科技（武汉）有限公司运营的 Cloud Platform 与 SRE 服务品牌。
+              </p>
+              <div class="company-logo-card" aria-label="Mizumoto Tech">
+                <img src="assets/pic/mizumototech_logo.png" alt="">
+                <span>Mizumoto Tech</span>
+              </div>
+            </div>
+            <div class="founder-overview">
+              <div class="about-copy">
+                <p>
+                  服务由在日本工作的 SRE Supervisor Ruiyuan "Mizumoto" Xu 主导，具备 GCP、GKE、
+                  Kubernetes、Terraform、ArgoCD、CI/CD、SLO/SLI、可观测性、故障响应、灾难恢复、
+                  IAM/IAP 与云成本优化等实战经验。
+                </p>
+              </div>
+              <button class="founder-photo" type="button" data-photo-open aria-label="查看 Ruiyuan Mizumoto Xu 的大图照片">
+                <img src="assets/pic/avatar_03_study_square.jpg" alt="Ruiyuan Mizumoto Xu">
+              </button>
+            </div>
           </div>
           <dl class="company-facts">
             <div>
@@ -360,6 +377,11 @@
         <a href="https://www.mizumoto.tech">English</a>
       </div>
     </footer>
+
+    <dialog class="photo-dialog" aria-label="Ruiyuan Mizumoto Xu 照片">
+      <button class="photo-dialog-close" type="button" data-photo-close aria-label="关闭照片预览">关闭</button>
+      <img src="assets/pic/avatar_03_study_square.jpg" alt="Ruiyuan Mizumoto Xu">
+    </dialog>
 
     <script>
       const indicator = document.querySelector('.section-indicator');
@@ -449,6 +471,20 @@
       );
 
       targets.forEach((target) => observer.observe(target));
+
+      const photoDialog = document.querySelector('.photo-dialog');
+      const photoOpen = document.querySelector('[data-photo-open]');
+      const photoClose = document.querySelector('[data-photo-close]');
+
+      if (photoDialog && photoOpen && photoClose) {
+        photoOpen.addEventListener('click', () => photoDialog.showModal());
+        photoClose.addEventListener('click', () => photoDialog.close());
+        photoDialog.addEventListener('click', (event) => {
+          if (event.target === photoDialog) {
+            photoDialog.close();
+          }
+        });
+      }
     </script>
   </body>
 </html>
