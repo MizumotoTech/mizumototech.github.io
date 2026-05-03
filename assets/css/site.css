@@ -130,7 +130,7 @@ main {
 .section-indicator {
   position: fixed;
   --indicator-progress: 0%;
-  left: clamp(12px, 2vw, 28px);
+  left: clamp(8px, 1vw, 18px);
   top: 50%;
   z-index: 5;
   transform: translateY(-50%);
