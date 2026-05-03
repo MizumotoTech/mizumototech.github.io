@@ -132,8 +132,8 @@ Scope:
 - Keep claims conservative and verifiable.
 - Avoid private operating, customer, payment, settlement, and internal business
   details.
-- Use Japan-led senior engineering positioning unless a more specific
-  Tokyo-led claim is confirmed.
+- Use founder-led senior engineering positioning with direct senior review
+  from scope definition to final validation.
 
 Verification:
 
@@ -150,7 +150,7 @@ without making the site sound like generic offshore outsourcing.
 
 Scope:
 
-- Explain Japan-side engineering leadership.
+- Explain founder-led senior engineering review.
 - Explain risk-based delivery separation.
 - Explain blended delivery only as a case-by-case option for lower-sensitivity
   work.

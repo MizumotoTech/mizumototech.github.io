@@ -7,16 +7,16 @@ are complete.
 
 ## Direction
 
-Use a Japan-led delivery position without presenting the company as a generic
-offshore outsourcing shop.
+Use a founder-led, senior-reviewed GCP reliability position without presenting
+the company as a generic offshore outsourcing shop.
 
 Use `Mizumoto Tech` consistently for the homepage, footer, metadata, and Open
 Graph title.
 
 The public message should be:
 
-- Japan-side senior engineering judgment is the core value.
-- Security-sensitive work requires Japan-side handling, strict access
+- Founder-led senior engineering judgment is the core value.
+- Security-sensitive work requires direct senior handling, strict access
   boundaries, or separate client approval.
 - Lower-sensitivity implementation support may be scoped separately in future
   engagements when delivery boundaries and risk profile allow it.
@@ -36,16 +36,16 @@ Avoid:
 
 ### Hero
 
-Japan-led cloud reliability engineering for modern teams
+GCP reliability engineering for reviewable, handover-ready cloud foundations
 
 Mizumoto Tech helps teams strengthen cloud infrastructure, delivery workflows,
-and operational reliability through Japan-side senior engineering oversight
-and carefully scoped delivery support.
+and operational reliability through founder-led senior engineering review and
+carefully scoped delivery support.
 
 Led by a U.S.-trained engineer with a computer science master's background and
 hands-on cloud operations experience.
 
-Security-sensitive work requires direct Japan-side handling, strict access
+Security-sensitive work requires direct senior handling, strict access
 boundaries, or separate client approval. Selected lower-sensitivity
 implementation support may be scoped separately in future engagements,
 depending on delivery boundaries and risk profile.
@@ -54,9 +54,9 @@ Book an intro call
 
 ### Positioning
 
-Mizumoto Tech is a Japan-led engineering practice for teams that need practical
-cloud operations support, clearer delivery workflows, and more reliable
-infrastructure foundations.
+Mizumoto Tech is a founder-led engineering practice for teams that need
+practical cloud operations support, clearer delivery workflows, and more
+reliable infrastructure foundations.
 
 The core value is technical judgment, disciplined execution, and clear delivery
 boundaries.
@@ -75,9 +75,9 @@ reviewable, and transferable.
 
 ### Delivery Model
 
-Japan-side senior engineering oversight
+Founder-led senior engineering review
 
-High-sensitivity or high-accountability work requires Japan-side senior
+High-sensitivity or high-accountability work requires direct senior
 engineering involvement. This includes workstreams that involve production
 access, sensitive operational context, stronger architectural judgment, or
 client-specific security requirements.
@@ -99,7 +99,7 @@ allow it.
 
 ### Why Teams Work With Mizumoto Tech
 
-- Japan-side senior engineering oversight
+- Founder-led senior engineering review
 - Practical operator mindset
 - Clear access and delivery boundaries
 - Cost flexibility where the risk profile allows it
@@ -114,13 +114,13 @@ matters.
 
 ### First Screen
 
-日本侧主导的云基础设施与可靠性工程服务
+面向可评审、可交接云基础设施的 GCP 可靠性工程
 
 Mizumoto Tech 面向成长型技术团队，提供云基础设施、交付流程和运维可靠性方面的工程支持。
 
-Mizumoto Tech 的价值不在于堆人力，而在于日本侧资深工程判断、清晰交付边界和可落地的技术执行。
+Mizumoto Tech 的价值不在于堆人力，而在于创始人主导的资深工程判断、清晰交付边界和可落地的技术执行。
 
-对于涉及生产访问、客户环境信息、敏感日志、权限体系或合规要求的工作，默认需要日本侧直接参与、严格访问边界，或经过客户单独确认。
+对于涉及生产访问、客户环境信息、敏感日志、权限体系或合规要求的工作，默认需要资深工程直接参与、严格访问边界，或经过客户单独确认。
 
 对于边界清晰、低敏感、可重复执行的工作，未来可根据交付边界和风险等级，按项目情况单独评估协同交付方式。
 
@@ -134,9 +134,9 @@ Mizumoto Tech 的价值不在于堆人力，而在于日本侧资深工程判断
 
 ### 交付原则
 
-日本侧主导
+创始人主导
 
-关键工作由日本侧资深工程人员直接把关，包括架构判断、风险识别、交付边界定义和敏感工作流处理。
+关键工作由创始人主导的资深工程评审直接把关，包括架构判断、风险识别、交付边界定义和敏感工作流处理。
 
 风险分级
 
@@ -154,11 +154,12 @@ Mizumoto Tech 的价值不在于堆人力，而在于日本侧资深工程判断
 
 ### 收尾句
 
-关键工作保持日本侧标准。适合优化成本的部分，在风险边界内优化。
+关键工作保持资深工程直接评审。适合优化成本的部分，在风险边界内优化。
 
 ## Fact Checks Before Publishing
 
-- Confirm whether "Tokyo-led" or "Japan-side" is the correct public wording.
+- Confirm whether "founder-led" and "direct senior review" are the correct
+  public wording.
 - Confirm whether any legal footer name is required in addition to the public
   brand `Mizumoto Tech`.
 - Confirm whether pricing should remain private, move to a separate pricing
