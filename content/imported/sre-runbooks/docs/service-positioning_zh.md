@@ -2,45 +2,58 @@
 
 ## 一句话定位
 
-Mizumoto Tech帮助团队在 GCP 上构建云基础设施底座，使用 Terraform 和 CI/CD，
-并提供清晰的交接文档。
+Mizumoto Tech 面向成长型团队提供跨境云可靠性工程服务，以日本侧资深工程
+判断、国内低敏协同和可审计交付资产，帮助客户降低云基础设施、发布流程、
+成本治理和运维交接风险。
 
 ## 服务范围（v0.2）
 
-### 主服务包
+### 入口评审
+
+1. Cloud Cost Hygiene Pack
+2. Architecture Review Pack
+
+### 实施服务包
 
 1. Terraform Foundation Pack
 2. CI/CD Bootstrap Pack
 
-### 入门服务
+### 运维可交接性服务包
 
-1. Architecture Review Pack
+1. Day-2 Operations Handover Pack
 
-### 附加项
+### 后续持续服务
 
-1. Runbook and Handover Add-on
-2. Cloud Cost Hygiene Pack
+1. Monthly Technical Advisory
 
 ## Phase 1 交付边界
 
 - Phase 1 阶段对外承诺以 GCP 为主。
 - 多云模式可以后续作为示例补充，但不作为初期服务承诺。
+- 每个实施服务包都必须包含基础 handover 交付物。
+- Day-2 Operations Handover Pack 面向已有系统的运维责任转移，不是把
+  基础项目交接另行收费。
+- Monthly Technical Advisory 属于后续持续服务，需要单独约定小时数、响应
+  预期和生产风险边界。
 
 ## 服务结果表述
 
+- 云成本卫生评审提供优先级清理候选项，帮助团队在进入深度 FinOps 之前先
+  识别明显浪费。
+- 架构评审提供可靠性风险画像，帮助团队先修关键问题，而不是堆积泛化建议。
+- Day-2 运维交接服务面向已有系统，使指定工程师可以依据文档完成只读检查、
+  triage 判断、升级触发和常规操作，而不依赖未文档化的口头经验。
 - 面向 `dev` / `stg` / `prd` 的 Terraform 基础搭建，帮助团队在不依赖
   临时手工操作的前提下稳定创建环境。
 - 带安全发布流程的 CI/CD 启动搭建，让部署过程可重复、可评审、可回滚。
-- 带优先级行动清单的架构评审，帮助团队先修关键问题，而不是堆积泛化建议。
-- 以 runbook 与交接文档作为附加交付，降低对原始实施者的依赖。
-- 以成本卫生基线作为附加项，在进入深度 FinOps 之前先识别明显浪费。
 
 ## 当前非主推（暂不作为核心售卖）
 
 - 全量可观测性体系改造。
 - SLO 与 error budget 体系设计。
-- 以事故响应值守为核心的长期服务。
+- 以事故响应值守或 7x24 on-call 为核心的长期服务。
 - 从第一天就做多云并行实施。
+- 未单独约定支持边界和责任边界的月度顾问服务。
 
 ## 私有与公开策略
 
