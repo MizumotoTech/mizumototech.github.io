@@ -15,7 +15,7 @@
     >
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mizumoto.tech/zh.html">
-    <meta name="theme-color" content="#081113">
+    <meta name="theme-color" content="#f5f7fb">
     <link rel="icon" type="image/png" href="assets/pic/mizumototech_logo.png">
     <link rel="apple-touch-icon" href="assets/pic/mizumototech_logo.png">
     <link rel="alternate" hreflang="en" href="https://mizumoto.tech/">
@@ -89,28 +89,23 @@
       </a>
 
       <nav class="site-nav" aria-label="主导航">
-        <a href="#support">服务对象</a>
-        <a href="#entry">入口服务</a>
-        <a href="#services">服务包</a>
-        <a href="#delivery">交付模式</a>
-        <a href="#company">公司信息</a>
-        <a href="#contact">联系</a>
-        <a href="https://www.mizumoto.tech">English</a>
+        <div class="nav-links">
+          <a href="#support">服务对象</a>
+          <a href="#entry">入口服务</a>
+          <a href="#services">服务包</a>
+          <a href="#delivery">交付模式</a>
+          <a href="#company">公司信息</a>
+          <a href="#contact">联系</a>
+        </div>
+        <div class="nav-actions">
+          <a class="language-link" href="https://www.mizumoto.tech">English</a>
+          <a class="nav-cta" href="#entry">开始架构评审</a>
+        </div>
       </nav>
     </header>
 
     <main>
       <section class="hero" id="hero" aria-labelledby="hero-title">
-        <div class="hero-visual" aria-hidden="true">
-          <div class="signal-orbit orbit-one"></div>
-          <div class="signal-orbit orbit-two"></div>
-          <div class="signal-route route-one"></div>
-          <div class="signal-route route-two"></div>
-          <div class="signal-node node-one"></div>
-          <div class="signal-node node-two"></div>
-          <div class="signal-node node-three"></div>
-        </div>
-
         <div class="hero-inner">
           <div class="hero-content">
             <p class="eyebrow">Mizumoto Tech</p>
@@ -130,24 +125,61 @@
             </div>
           </div>
 
-          <aside class="hero-review-card" aria-label="Architecture Review Pack 摘要">
-            <p class="eyebrow">入口服务</p>
-            <h2>从架构评审开始</h2>
-            <dl>
-              <div>
-                <dt>范围</dt>
-                <dd>GCP / GKE / Terraform / CI/CD / Runbooks</dd>
+          <div class="hero-panel-stack">
+            <aside class="hero-review-card" aria-label="Architecture Review Pack 摘要">
+              <p class="eyebrow">入口服务</p>
+              <h2>从架构评审开始</h2>
+              <dl>
+                <div>
+                  <dt>范围</dt>
+                  <dd>GCP / GKE / Terraform / CI/CD / Runbooks</dd>
+                </div>
+                <div>
+                  <dt>产出</dt>
+                  <dd>评审报告、优先级行动计划、风险边界说明、后续合作建议</dd>
+                </div>
+                <div>
+                  <dt>交付控制</dt>
+                  <dd>从范围定义到最终验证均由资深工程直接评审</dd>
+                </div>
+              </dl>
+            </aside>
+
+            <div class="architecture-panel" aria-hidden="true">
+              <div class="panel-topline">
+                <span>Reliability map</span>
+                <span>GCP foundation</span>
               </div>
-              <div>
-                <dt>产出</dt>
-                <dd>评审报告、优先级行动计划、风险边界说明、后续合作建议</dd>
+              <div class="infra-map">
+                <span class="map-line line-a"></span>
+                <span class="map-line line-b"></span>
+                <span class="map-line line-c"></span>
+                <div class="diagram-node node-platform">Platform</div>
+                <div class="diagram-node node-release">CI/CD</div>
+                <div class="diagram-node node-runtime">GKE</div>
+                <div class="diagram-node node-observe">SLO</div>
+                <div class="diagram-node node-handover">Runbooks</div>
               </div>
-              <div>
-                <dt>交付控制</dt>
-                <dd>从范围定义到最终验证均由资深工程直接评审</dd>
+              <div class="review-console">
+                <span>review.boundaries: scoped</span>
+                <span>terraform.plan: reviewable</span>
+                <span>handover.assets: ready</span>
               </div>
-            </dl>
-          </aside>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="capability-strip" aria-label="云可靠性能力">
+        <div class="capability-inner">
+          <span>GCP</span>
+          <span>GKE</span>
+          <span>Terraform</span>
+          <span>CI/CD</span>
+          <span>ArgoCD</span>
+          <span>SLO</span>
+          <span>Runbooks</span>
+          <span>Cost Hygiene</span>
         </div>
       </section>
 
@@ -190,18 +222,26 @@
           <h2 id="entry-title">Architecture Review Pack</h2>
         </div>
         <div class="entry-panel">
-          <div>
+          <div class="entry-copy">
             <p class="lead-copy">
               面向需要资深判断的团队，对云平台、发布流程、访问模型、可靠性风险和改进优先级进行低权限评审。
             </p>
             <a class="doc-link" href="docs.html?doc=content%2Fimported%2Fsre-runbooks%2Fservices%2Farchitecture-review-pack_zh.md">查看公开说明</a>
           </div>
-          <ul class="deliverable-list" aria-label="架构评审交付物">
-            <li>评审报告</li>
-            <li>优先级行动计划</li>
-            <li>风险边界说明</li>
-            <li>后续合作建议</li>
-          </ul>
+          <div class="entry-spec">
+            <div>
+              <span>范围</span>
+              <p>GCP、GKE、Terraform、CI/CD、访问模型、Runbook 与运营准备度。</p>
+            </div>
+            <div>
+              <span>产出</span>
+              <p>评审报告、优先级行动计划、风险边界说明与后续合作建议。</p>
+            </div>
+            <div>
+              <span>交付控制</span>
+              <p>从初始范围定义到最终验证均由资深工程直接评审。</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -251,13 +291,27 @@
           <h2 id="delivery-title">资深判断优先，边界清晰的实施其次。</h2>
         </div>
         <div class="delivery-copy">
-          <p>
-            Mizumoto Tech 以创始人主导的资深工程评审为核心。架构决策、影响生产的评审、访问边界和最终交付验证，均保留在资深工程直接评审之下。
-          </p>
-          <p>
-            安全敏感工作需要资深工程直接处理、严格的访问边界或客户单独批准。
-            较低敏感度的实施支持可在后续合作中单独划定范围，具体取决于交付边界和风险画像。
-          </p>
+          <article>
+            <span>01</span>
+            <h3>创始人主导的资深评审</h3>
+            <p>
+              架构决策、影响生产的评审、访问边界和最终交付验证，均保留在资深工程直接评审之下。
+            </p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>受控访问边界</h3>
+            <p>
+              安全敏感工作需要资深工程直接处理、严格的访问边界或客户单独批准。
+            </p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>范围清晰的实施支持</h3>
+            <p>
+              较低敏感度的实施支持可在后续合作中单独划定范围，具体取决于交付边界和风险画像。
+            </p>
+          </article>
         </div>
       </section>
 
