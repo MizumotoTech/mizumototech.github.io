@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Architecture Review Pack | Mizumoto Tech</title>
+    <meta
+      name="description"
+      content="A scoped GCP-first architecture review for teams that need clear cloud risk priorities before implementation work begins."
+    >
+    <meta property="og:title" content="Architecture Review Pack | Mizumoto Tech">
+    <meta
+      property="og:description"
+      content="Founder-led GCP reliability review with risk register, priority action plan, and handover-ready decision notes."
+    >
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#080d12">
+    <link rel="icon" type="image/png" href="assets/mizumototech_logo.png">
+    <link rel="apple-touch-icon" href="assets/mizumototech_logo.png">
+    <link rel="stylesheet" href="sales.css">
+  </head>
+  <body class="sales-v1">
+    <header class="topbar">
+      <a class="brand" href="./index.html" aria-label="Mizumoto Tech sales concepts">
+        <img src="assets/mizumototech_logo.png" alt="">
+        <span>Mizumoto Tech</span>
+      </a>
+      <nav class="nav" aria-label="Sales page versions">
+        <a href="v1.html" aria-current="page">Review</a>
+        <a href="v2.html">Evidence</a>
+        <a href="v3.html">Scope</a>
+        <a class="nav-cta" href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-inner">
+          <p class="eyebrow">Mizumoto Tech Architecture Review Pack</p>
+          <h1 id="hero-title">A clearer first move for cloud reliability work.</h1>
+          <p class="hero-copy">
+            A scoped GCP-first review that turns architecture debt, release risk,
+            and handover gaps into a prioritized action plan before implementation
+            work begins.
+          </p>
+          <div class="hero-actions" aria-label="Page actions">
+            <a class="button primary" href="#contact">Request a scope review</a>
+            <a class="button secondary" href="../docs.html?doc=content%2Fimported%2Fsre-runbooks%2Fservices%2Farchitecture-review-pack.md">Read public brief</a>
+          </div>
+
+          <div class="hero-proof" aria-label="Architecture Review Pack outputs">
+            <div>
+              <strong>Current-state map</strong>
+              <span>Scoped architecture summary and review assumptions.</span>
+            </div>
+            <div>
+              <strong>Risk register</strong>
+              <span>Severity, impact, ownership, and decision signals.</span>
+            </div>
+            <div>
+              <strong>Priority plan</strong>
+              <span>Near-term and mid-term sequencing for limited capacity.</span>
+            </div>
+            <div>
+              <strong>Handover notes</strong>
+              <span>Follow-up tasks ready for issue tracker conversion.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band white" aria-labelledby="why-title">
+        <div class="section-inner split">
+          <div class="section-kicker">
+            <p class="eyebrow">Why start here</p>
+            <h2 id="why-title">Implementation is easier after the risk boundary is visible.</h2>
+          </div>
+          <div class="body-copy">
+            <p>
+              Many teams already know the shape of the problem: Terraform grew
+              unevenly, release gates are informal, runbooks depend on memory,
+              and production changes require too much trust in unwritten steps.
+            </p>
+            <p>
+              The review pack is intentionally narrow. It documents the current
+              state, separates urgent risks from useful improvements, and creates
+              a follow-up backlog that can be reviewed before anyone changes
+              production systems.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="band soft rule" aria-labelledby="service-title">
+        <div class="section-inner">
+          <div class="section-kicker">
+            <p class="eyebrow">What gets reviewed</p>
+            <h2 id="service-title">The parts of cloud delivery where vague ownership becomes expensive.</h2>
+          </div>
+          <div class="cards four">
+            <article class="card">
+              <span class="card-number">01</span>
+              <h3>Infrastructure baseline</h3>
+              <p>Environment boundaries, Terraform state, module structure, IAM patterns, and change flow.</p>
+            </article>
+            <article class="card">
+              <span class="card-number">02</span>
+              <h3>Release workflow</h3>
+              <p>Build, validation, deployment path, promotion rules, approval gates, and rollback checkpoints.</p>
+            </article>
+            <article class="card">
+              <span class="card-number">03</span>
+              <h3>Operational readiness</h3>
+              <p>Runbooks, escalation triggers, day-2 ownership, known risks, and handover completeness.</p>
+            </article>
+            <article class="card">
+              <span class="card-number">04</span>
+              <h3>Cost hygiene signals</h3>
+              <p>Ownership visibility, obvious waste candidates, budget alerting gaps, and safe cleanup sequencing.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="band white rule" aria-labelledby="method-title">
+        <div class="section-inner">
+          <div class="section-kicker">
+            <p class="eyebrow">Delivery shape</p>
+            <h2 id="method-title">A small engagement with reviewable outputs.</h2>
+          </div>
+          <div class="process" aria-label="Architecture review process">
+            <article class="process-step">
+              <span>01</span>
+              <h3>Scope</h3>
+              <p>Confirm systems, access level, production sensitivity, decision stakeholders, and exclusions.</p>
+            </article>
+            <article class="process-step">
+              <span>02</span>
+              <h3>Map</h3>
+              <p>Review architecture docs, repositories, pipeline definitions, configs, and known pain points.</p>
+            </article>
+            <article class="process-step">
+              <span>03</span>
+              <h3>Prioritize</h3>
+              <p>Separate near-term risk reduction from larger follow-up work and record trade-off rationale.</p>
+            </article>
+            <article class="process-step">
+              <span>04</span>
+              <h3>Handover</h3>
+              <p>Deliver report, action plan, risk notes, and backlog-ready implementation tasks.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="band soft rule" aria-labelledby="path-title">
+        <div class="section-inner split reverse">
+          <div class="quote-panel">
+            <p>
+              The goal is not to collect generic best practices. The goal is to
+              decide what should be fixed first, by whom, and under which risk boundary.
+            </p>
+            <span>Service principle from the current public positioning docs</span>
+          </div>
+          <div class="section-kicker">
+            <p class="eyebrow">Follow-on path</p>
+            <h2 id="path-title">When the review is complete, implementation can be scoped cleanly.</h2>
+            <p>
+              Typical follow-up work may include a Terraform foundation, CI/CD
+              bootstrap, runbook and handover package, or cost hygiene baseline.
+              Each remains separately scoped.
+            </p>
+            <div class="doc-links" aria-label="Related public documents">
+              <a href="../docs.html?doc=content%2Fimported%2Fsre-runbooks%2Fservices%2Fterraform-foundation-pack.md">Terraform Foundation</a>
+              <a href="../docs.html?doc=content%2Fimported%2Fsre-runbooks%2Fservices%2Fcicd-bootstrap-pack.md">CI/CD Bootstrap</a>
+              <a href="../docs.html?doc=content%2Fimported%2Fsre-runbooks%2Ftemplates%2Fhandover-template.md">Handover Template</a>
+              <a href="../docs.html?doc=content%2Fimported%2Fsre-runbooks%2Fservices%2Fcost-hygiene-pack.md">Cost Hygiene</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band white rule" aria-labelledby="fit-title">
+        <div class="section-inner">
+          <div class="section-kicker">
+            <p class="eyebrow">Fit</p>
+            <h2 id="fit-title">Designed for small teams that need senior judgment before more delivery work.</h2>
+          </div>
+          <div class="fit-grid">
+            <div class="fit-panel">
+              <h3>Good fit</h3>
+              <ul class="check-list">
+                <li>Small to mid-size product teams on GCP.</li>
+                <li>MSPs, cloud consultancies, and software teams with delivery pressure.</li>
+                <li>Teams that need a practical roadmap before major implementation work.</li>
+                <li>Teams that can provide honest context and review stakeholders.</li>
+              </ul>
+            </div>
+            <div class="fit-panel">
+              <h3>Not the starting point</h3>
+              <ul class="check-list">
+                <li>Full production migration execution.</li>
+                <li>Organization-wide platform redesign.</li>
+                <li>Long-term on-call operation support.</li>
+                <li>Deep SLO or observability program design as the first engagement.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta" id="contact" aria-labelledby="contact-title">
+        <div class="section-inner cta-grid">
+          <div>
+            <p class="eyebrow">Contact</p>
+            <h2 id="contact-title">Start with a scoped review, not an open-ended consulting engagement.</h2>
+            <p>
+              Share the current cloud baseline, release workflow, and the first
+              operational risk you want reduced. Commercial terms are scoped
+              after discovery based on boundaries and response expectations.
+            </p>
+          </div>
+          <div class="contact-box" aria-label="Contact email">
+            <span>Request a scope review</span>
+            <strong>mizumoto#mizumoto.tech</strong>
+            <small>Replace # with @</small>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span>&copy; 2026 Mizumoto Tech.</span>
+        <nav class="footer-links" aria-label="Footer links">
+          <a href="index.html">All versions</a>
+          <a href="../docs.html?doc=content%2Fimported%2Fsre-runbooks%2Fservices%2Farchitecture-review-pack.md">Public brief</a>
+          <a href="../">Main site</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
