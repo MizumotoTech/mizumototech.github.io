@@ -15,7 +15,7 @@
     >
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mizumoto.tech/">
-    <meta name="theme-color" content="#081113">
+    <meta name="theme-color" content="#f5f7fb">
     <link rel="icon" type="image/png" href="assets/pic/mizumototech_logo.png">
     <link rel="apple-touch-icon" href="assets/pic/mizumototech_logo.png">
     <link rel="alternate" hreflang="zh-Hans" href="https://mizumoto.tech/zh.html">
@@ -89,27 +89,22 @@
       </a>
 
       <nav class="site-nav" aria-label="Primary navigation">
-        <a href="#entry">Architecture Review</a>
-        <a href="#services">Service Packs</a>
-        <a href="#delivery">Delivery</a>
-        <a href="#company">Company</a>
-        <a href="#contact">Contact</a>
-        <a href="zh.html" lang="zh-Hans">中文</a>
+        <div class="nav-links">
+          <a href="#entry">Architecture Review</a>
+          <a href="#services">Service Packs</a>
+          <a href="#delivery">Delivery</a>
+          <a href="#company">Company</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="nav-actions">
+          <a class="language-link" href="zh.html" lang="zh-Hans">中文</a>
+          <a class="nav-cta" href="#entry">Start an Architecture Review</a>
+        </div>
       </nav>
     </header>
 
     <main>
       <section class="hero" id="hero" aria-labelledby="hero-title">
-        <div class="hero-visual" aria-hidden="true">
-          <div class="signal-orbit orbit-one"></div>
-          <div class="signal-orbit orbit-two"></div>
-          <div class="signal-route route-one"></div>
-          <div class="signal-route route-two"></div>
-          <div class="signal-node node-one"></div>
-          <div class="signal-node node-two"></div>
-          <div class="signal-node node-three"></div>
-        </div>
-
         <div class="hero-inner">
           <div class="hero-content">
             <p class="eyebrow">Mizumoto Tech</p>
@@ -134,24 +129,61 @@
             </div>
           </div>
 
-          <aside class="hero-review-card" aria-label="Architecture Review Pack summary">
-            <p class="eyebrow">Entry Service</p>
-            <h2>Start with Architecture Review</h2>
-            <dl>
-              <div>
-                <dt>Scope</dt>
-                <dd>GCP / GKE / Terraform / CI/CD / Runbooks</dd>
+          <div class="hero-panel-stack">
+            <aside class="hero-review-card" aria-label="Architecture Review Pack summary">
+              <p class="eyebrow">Entry Service</p>
+              <h2>Start with Architecture Review</h2>
+              <dl>
+                <div>
+                  <dt>Scope</dt>
+                  <dd>GCP / GKE / Terraform / CI/CD / Runbooks</dd>
+                </div>
+                <div>
+                  <dt>Outputs</dt>
+                  <dd>Review Report, Prioritized Action Plan, Risk Boundary Notes, Follow-up Proposal</dd>
+                </div>
+                <div>
+                  <dt>Delivery control</dt>
+                  <dd>Direct senior review from scope to final validation</dd>
+                </div>
+              </dl>
+            </aside>
+
+            <div class="architecture-panel" aria-hidden="true">
+              <div class="panel-topline">
+                <span>Reliability map</span>
+                <span>GCP foundation</span>
               </div>
-              <div>
-                <dt>Outputs</dt>
-                <dd>Review Report, Prioritized Action Plan, Risk Boundary Notes, Follow-up Proposal</dd>
+              <div class="infra-map">
+                <span class="map-line line-a"></span>
+                <span class="map-line line-b"></span>
+                <span class="map-line line-c"></span>
+                <div class="diagram-node node-platform">Platform</div>
+                <div class="diagram-node node-release">CI/CD</div>
+                <div class="diagram-node node-runtime">GKE</div>
+                <div class="diagram-node node-observe">SLO</div>
+                <div class="diagram-node node-handover">Runbooks</div>
               </div>
-              <div>
-                <dt>Delivery control</dt>
-                <dd>Direct senior review from scope to final validation</dd>
+              <div class="review-console">
+                <span>review.boundaries: scoped</span>
+                <span>terraform.plan: reviewable</span>
+                <span>handover.assets: ready</span>
               </div>
-            </dl>
-          </aside>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="capability-strip" aria-label="Cloud reliability capabilities">
+        <div class="capability-inner">
+          <span>GCP</span>
+          <span>GKE</span>
+          <span>Terraform</span>
+          <span>CI/CD</span>
+          <span>ArgoCD</span>
+          <span>SLO</span>
+          <span>Runbooks</span>
+          <span>Cost Hygiene</span>
         </div>
       </section>
 
@@ -194,7 +226,7 @@
           <h2 id="entry-title">Architecture Review Pack</h2>
         </div>
         <div class="entry-panel">
-          <div>
+          <div class="entry-copy">
             <p class="lead-copy">
               A low-access review service for teams that need a senior
               assessment of their cloud platform, release workflow, access
@@ -202,12 +234,20 @@
             </p>
             <a class="doc-link" href="docs.html?doc=content%2Fimported%2Fsre-runbooks%2Fservices%2Farchitecture-review-pack.md">Read public brief</a>
           </div>
-          <ul class="deliverable-list" aria-label="Architecture Review Pack deliverables">
-            <li>Review Report</li>
-            <li>Prioritized Action Plan</li>
-            <li>Risk Boundary Notes</li>
-            <li>Follow-up Proposal</li>
-          </ul>
+          <div class="entry-spec">
+            <div>
+              <span>Scope</span>
+              <p>GCP, GKE, Terraform, CI/CD, access model, runbooks, and operational readiness.</p>
+            </div>
+            <div>
+              <span>Outputs</span>
+              <p>Review Report, Prioritized Action Plan, Risk Boundary Notes, and Follow-up Proposal.</p>
+            </div>
+            <div>
+              <span>Delivery control</span>
+              <p>Direct senior review from initial scope through final validation.</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -257,19 +297,32 @@
           <h2 id="delivery-title">Senior judgment first. Scoped implementation second.</h2>
         </div>
         <div class="delivery-copy">
-          <p>
-            Mizumoto Tech is built around founder-led senior engineering review.
-            Architecture decisions, production-impacting reviews, access
-            boundaries, and final delivery validation stay under direct senior
-            review.
-          </p>
-          <p>
-            Security-sensitive work requires direct senior handling, strict
-            access boundaries, or separate client approval.
-            Selected lower-sensitivity implementation support may be scoped
-            separately in future engagements, depending on delivery boundaries
-            and risk profile.
-          </p>
+          <article>
+            <span>01</span>
+            <h3>Founder-led senior review</h3>
+            <p>
+              Architecture decisions, production-impacting reviews, access
+              boundaries, and final delivery validation stay under direct senior
+              review.
+            </p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Controlled access boundaries</h3>
+            <p>
+              Security-sensitive work requires direct senior handling, strict
+              access boundaries, or separate client approval.
+            </p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Scoped implementation support</h3>
+            <p>
+              Selected lower-sensitivity implementation support may be scoped
+              separately in future engagements, depending on delivery boundaries
+              and risk profile.
+            </p>
+          </article>
         </div>
       </section>
 
@@ -428,7 +481,7 @@
       };
 
       const savedIndicatorState = localStorage.getItem(indicatorStorageKey);
-      setIndicatorCollapsed(savedIndicatorState === 'true');
+      setIndicatorCollapsed(savedIndicatorState === null ? true : savedIndicatorState === 'true');
 
       if (indicatorToggle) {
         indicatorToggle.addEventListener('click', () => {
