@@ -3,119 +3,105 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Mizumoto Tech Sales Page Concepts</title>
+    <title>Mizumoto Tech Sales Sheet</title>
     <meta
       name="description"
-      content="Three public-safe static sales page concepts for Mizumoto Tech, based on the current service documents."
+      content="Mizumoto Tech one-page sales sheet for founder-led GCP reliability engineering and scoped SRE support."
     >
-    <meta name="theme-color" content="#f5f5f7">
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#080d12">
+    <meta http-equiv="refresh" content="0; url=mizumoto-tech-one-page-appeal-sheet.html">
+    <link rel="canonical" href="mizumoto-tech-one-page-appeal-sheet.html">
     <link rel="icon" type="image/png" href="assets/mizumototech_logo.png">
     <link rel="apple-touch-icon" href="assets/mizumototech_logo.png">
-    <link rel="stylesheet" href="sales.css">
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #101214;
+        --muted: #6e747b;
+        --paper: #ffffff;
+        --wash: #f5f5f7;
+        --blue: #006edb;
+        --line: #d9dde2;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        background: var(--wash);
+      }
+
+      body {
+        display: grid;
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        place-items: center;
+        background: var(--wash);
+        color: var(--ink);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        line-height: 1.5;
+      }
+
+      main {
+        width: min(520px, calc(100% - 40px));
+        padding: 32px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: var(--paper);
+      }
+
+      img {
+        display: block;
+        width: 40px;
+        height: 40px;
+        margin-bottom: 24px;
+        border: 1px solid #eceff2;
+        border-radius: 8px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 28px;
+        line-height: 1.14;
+        letter-spacing: 0;
+      }
+
+      p {
+        margin: 14px 0 0;
+        color: var(--muted);
+      }
+
+      a {
+        display: inline-flex;
+        min-height: 42px;
+        align-items: center;
+        justify-content: center;
+        margin-top: 22px;
+        padding: 10px 14px;
+        border-radius: 8px;
+        background: var(--blue);
+        color: #fff;
+        font-weight: 700;
+        text-decoration: none;
+      }
+    </style>
+    <script>
+      window.location.replace('mizumoto-tech-one-page-appeal-sheet.html');
+    </script>
   </head>
-  <body class="sales-home">
-    <header class="topbar">
-      <a class="brand" href="./index.html" aria-label="Mizumoto Tech sales concepts">
-        <img src="assets/mizumototech_logo.png" alt="">
-        <span>Mizumoto Tech</span>
-      </a>
-      <nav class="nav" aria-label="Sales page versions">
-        <a href="v1.html">Version 1</a>
-        <a href="v2.html">Version 2</a>
-        <a href="v3.html">Version 3</a>
-        <a class="nav-cta" href="../">Main site</a>
-      </nav>
-    </header>
-
+  <body>
     <main>
-      <section class="hero compact lead-wide" aria-labelledby="page-title">
-        <div class="hero-inner">
-          <p class="eyebrow">Three restrained sales directions</p>
-          <h1 id="page-title">Credible pages for a high-trust cloud engineering service.</h1>
-          <p class="hero-copy">
-            Three standalone versions built from the current public documents.
-            Each keeps the claims narrow, the proof concrete, and the design
-            closer to product launch discipline than agency-style hype.
-          </p>
-        </div>
-      </section>
-
-      <section class="home-intro" aria-labelledby="versions-title">
-        <div class="section-inner">
-          <div class="section-kicker">
-            <p class="eyebrow">Choose the narrative</p>
-            <h2 id="versions-title">Same service truth. Three different conversion angles.</h2>
-          </div>
-          <p class="home-note">
-            All three versions avoid unsupported scale claims, certifications,
-            guarantees, pricing promises, private operating details, and customer
-            examples. They sell through scope, deliverables, and reviewability.
-          </p>
-
-          <div class="version-grid" aria-label="Available sales page versions">
-            <article class="version-card">
-              <div>
-                <p class="eyebrow">Version 1</p>
-                <h2>Architecture Review Pack</h2>
-                <p>
-                  Best for a direct lead-generation page. It makes the entry
-                  service unmistakable, then shows the follow-on path.
-                </p>
-                <ul>
-                  <li>Most focused first screen</li>
-                  <li>Strongest scope-to-contact flow</li>
-                  <li>Good default for cold visitors</li>
-                </ul>
-              </div>
-              <a class="button primary" href="v1.html">Open version 1</a>
-            </article>
-
-            <article class="version-card">
-              <div>
-                <p class="eyebrow">Version 2</p>
-                <h2>Handover-Ready Foundations</h2>
-                <p>
-                  Best for teams that need evidence. It foregrounds concrete
-                  outputs, acceptance criteria, and public docs.
-                </p>
-                <ul>
-                  <li>Most proof-heavy page</li>
-                  <li>Strong for MSPs and consultancies</li>
-                  <li>Best when trust must be earned slowly</li>
-                </ul>
-              </div>
-              <a class="button primary" href="v2.html">Open version 2</a>
-            </article>
-
-            <article class="version-card">
-              <div>
-                <p class="eyebrow">Version 3</p>
-                <h2>Scope Before Access</h2>
-                <p>
-                  Best for senior buyers. It emphasizes access boundaries,
-                  delivery responsibility, and low-risk engagement design.
-                </p>
-                <ul>
-                  <li>Most executive and conservative</li>
-                  <li>Clear fit and non-fit framing</li>
-                  <li>Strongest risk-control message</li>
-                </ul>
-              </div>
-              <a class="button primary" href="v3.html">Open version 3</a>
-            </article>
-          </div>
-        </div>
-      </section>
+      <img src="assets/mizumototech_logo.png" alt="">
+      <h1>Mizumoto Tech Sales Sheet</h1>
+      <p>
+        Redirecting to the canonical one-page appeal sheet.
+      </p>
+      <a href="mizumoto-tech-one-page-appeal-sheet.html">Open the sales sheet</a>
     </main>
-
-    <footer class="site-footer">
-      <div class="footer-inner">
-        <span>&copy; 2026 Mizumoto Tech.</span>
-        <nav class="footer-links" aria-label="Footer links">
-          <a href="../docs.html?doc=content%2Fimported%2Fsre-runbooks%2Fdocs%2Fservice-positioning.md">Public service notes</a>
-          <a href="../">Main site</a>
-        </nav>
-      </div>
-    </footer>
   </body>
 </html>
