@@ -427,9 +427,11 @@
           <form
             class="contact-form"
             data-contact-form
-            data-delivery-message="Contact endpoint is deployed, but message delivery is not enabled yet."
+            data-recorded-message="Your request has been recorded. Notification is not enabled yet."
             data-validation-message="Please complete the required fields."
             data-turnstile-message="Human verification failed. Please try again."
+            data-storage-message="Contact inquiry could not be recorded."
+            data-storage-config-message="Contact storage is not configured."
             data-config-message="Contact verification is not configured."
             data-error-message="Contact endpoint could not be reached. Please check back soon."
             aria-describedby="contact-form-note contact-form-status"
@@ -437,7 +439,7 @@
             <div class="contact-form-heading">
               <span>Scope first</span>
               <strong>Request a review</strong>
-              <p id="contact-form-note">This form calls the contact endpoint, but message delivery is not enabled yet.</p>
+              <p id="contact-form-note">This form records verified inquiries, but internal notification is not enabled yet.</p>
             </div>
             <div class="contact-form-grid">
               <div class="contact-field">
@@ -472,7 +474,7 @@
             </div>
             <div class="contact-consent">
               <input id="contact-consent" name="consent" type="checkbox" required>
-              <label for="contact-consent">I understand message delivery is not enabled yet.</label>
+              <label for="contact-consent">I understand internal notification is not enabled yet.</label>
             </div>
             <div class="contact-turnstile">
               <div class="cf-turnstile" data-sitekey="0x4AAAAAADslGqz8lpWh-Kw8"></div>
@@ -627,7 +629,8 @@
             message: String(formData.get('message') || '').trim(),
             consent: formData.get('consent') === 'on',
             website: String(formData.get('website') || '').trim(),
-            turnstileToken: String(formData.get('cf-turnstile-response') || '').trim()
+            turnstileToken: String(formData.get('cf-turnstile-response') || '').trim(),
+            sourcePage: `${window.location.origin}${window.location.pathname}`
           };
 
           if (status) {
@@ -651,16 +654,20 @@
             if (!status) {
               return;
             }
-            if (result.code === 'CONTACT_DELIVERY_NOT_ENABLED') {
-              status.textContent = form.dataset.deliveryMessage || result.message;
+            if (result.code === 'CONTACT_INQUIRY_RECORDED') {
+              status.textContent = form.dataset.recordedMessage || result.message;
             } else if (result.code === 'VALIDATION_ERROR') {
               status.textContent = form.dataset.validationMessage || result.message;
             } else if (result.code === 'TURNSTILE_VALIDATION_FAILED') {
               status.textContent = form.dataset.turnstileMessage || result.message;
             } else if (result.code === 'TURNSTILE_NOT_CONFIGURED') {
               status.textContent = form.dataset.configMessage || result.message;
+            } else if (result.code === 'CONTACT_DB_NOT_CONFIGURED') {
+              status.textContent = form.dataset.storageConfigMessage || result.message;
+            } else if (result.code === 'CONTACT_STORAGE_FAILED') {
+              status.textContent = form.dataset.storageMessage || result.message;
             } else {
-              status.textContent = form.dataset.deliveryMessage || 'Contact endpoint is deployed, but message delivery is not enabled yet.';
+              status.textContent = form.dataset.errorMessage || 'Contact endpoint could not be reached. Please check back soon.';
             }
             status.dataset.visible = 'true';
           } catch {

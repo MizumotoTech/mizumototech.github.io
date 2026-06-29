@@ -174,4 +174,43 @@
 
 ## Next Actions
 
-- Checkpoint 005: Email Delivery Skeleton.
+- Checkpoint 005: D1 Contact Inquiry Storage.
+
+# Checkpoint 005 - D1 Contact Inquiry Storage
+
+## Produced
+
+- Added `db/contact_inquiries.sql` with the `contact_inquiries` D1 table and indexes.
+- Updated `/api/contact` to insert verified human submissions into the `CONTACT_DB` D1 binding after Turnstile validation succeeds.
+- Added controlled JSON responses for missing D1 binding and D1 insert failure.
+- Updated English and Chinese form status handling for `CONTACT_INQUIRY_RECORDED`.
+
+## Verified
+
+- Non-POST methods still return controlled 405 JSON.
+- Missing required fields still return `VALIDATION_ERROR`.
+- Honeypot-filled submissions short-circuit without Turnstile validation or D1 insert.
+- Missing Turnstile secret, missing Turnstile token, and failed Turnstile validation still return controlled JSON.
+- Missing `CONTACT_DB` returns `CONTACT_DB_NOT_CONFIGURED`.
+- Successful Turnstile validation plus successful D1 insert returns `CONTACT_INQUIRY_RECORDED`.
+- D1 insert failure returns `CONTACT_STORAGE_FAILED`.
+- Turnstile token is not stored.
+- Raw user agent is not stored; only a SHA-256 hash is stored when hashing is available.
+- No email, webhook, DNS, dependency, CRM, analytics, queue, KV, R2, or Durable Object behavior is part of this checkpoint.
+
+## Known Gaps
+
+- Internal notification webhook is not implemented yet.
+- No email delivery.
+- No customer auto-reply.
+- No admin dashboard.
+- Contact path should not be considered fully live until internal notification is implemented and copy is updated.
+
+## Bugs Caught
+
+- The previous contact endpoint could validate humans but still discarded valid inquiries. This checkpoint records validated inquiries in D1.
+- The previous success path could only report delivery-not-enabled. The new success path reports storage only and avoids implying live handling.
+
+## Next Actions
+
+- Checkpoint 006: Internal Notification Webhook.
