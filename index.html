@@ -426,13 +426,15 @@
           <form
             class="contact-form"
             data-contact-form
-            data-disabled-message="Contact form endpoint is not enabled yet. Please check back soon."
+            data-delivery-message="Contact endpoint is deployed, but message delivery is not enabled yet."
+            data-validation-message="Please complete the required fields."
+            data-error-message="Contact endpoint could not be reached. Please check back soon."
             aria-describedby="contact-form-note contact-form-status"
           >
             <div class="contact-form-heading">
               <span>Scope first</span>
               <strong>Request a review</strong>
-              <p id="contact-form-note">This frontend form is staged before the contact endpoint goes live.</p>
+              <p id="contact-form-note">This form calls the contact endpoint, but message delivery is not enabled yet.</p>
             </div>
             <div class="contact-form-grid">
               <div class="contact-field">
@@ -445,11 +447,11 @@
               </div>
               <div class="contact-field">
                 <label for="contact-email">Work email</label>
-                <input id="contact-email" name="email" type="email" autocomplete="email" required>
+                <input id="contact-email" name="workEmail" type="email" autocomplete="email" required>
               </div>
               <div class="contact-field">
                 <label for="contact-service">Service area</label>
-                <select id="contact-service" name="service-area">
+                <select id="contact-service" name="serviceArea">
                   <option value="cloud-cost-hygiene">Cloud Cost Hygiene Review</option>
                   <option value="architecture-reliability">Architecture and Reliability Review</option>
                   <option value="runbook-handover">Runbook and Handover Pack</option>
@@ -467,7 +469,7 @@
             </div>
             <div class="contact-consent">
               <input id="contact-consent" name="consent" type="checkbox" required>
-              <label for="contact-consent">I understand this frontend form is not connected yet and will not deliver my message until the endpoint is enabled.</label>
+              <label for="contact-consent">I understand message delivery is not enabled yet.</label>
             </div>
             <button class="button primary contact-submit" type="submit">Submit request</button>
             <p
@@ -606,12 +608,59 @@
       }
 
       document.querySelectorAll('[data-contact-form]').forEach((form) => {
-        form.addEventListener('submit', (event) => {
+        form.addEventListener('submit', async (event) => {
           event.preventDefault();
           const status = form.querySelector('[data-contact-status]');
+          const submit = form.querySelector('button[type="submit"]');
+          const formData = new FormData(form);
+          const payload = {
+            name: String(formData.get('name') || '').trim(),
+            company: String(formData.get('company') || '').trim(),
+            workEmail: String(formData.get('workEmail') || '').trim(),
+            serviceArea: String(formData.get('serviceArea') || '').trim(),
+            message: String(formData.get('message') || '').trim(),
+            consent: formData.get('consent') === 'on',
+            website: String(formData.get('website') || '').trim()
+          };
+
           if (status) {
-            status.textContent = form.dataset.disabledMessage || 'Contact form endpoint is not enabled yet.';
+            status.textContent = '';
+            status.removeAttribute('data-visible');
+          }
+
+          if (submit) {
+            submit.disabled = true;
+          }
+
+          try {
+            const response = await fetch('/api/contact', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(payload)
+            });
+            const result = await response.json().catch(() => ({}));
+            if (!status) {
+              return;
+            }
+            if (result.code === 'CONTACT_DELIVERY_NOT_ENABLED') {
+              status.textContent = form.dataset.deliveryMessage || result.message;
+            } else if (result.code === 'VALIDATION_ERROR') {
+              status.textContent = form.dataset.validationMessage || result.message;
+            } else {
+              status.textContent = form.dataset.deliveryMessage || 'Contact endpoint is deployed, but message delivery is not enabled yet.';
+            }
             status.dataset.visible = 'true';
+          } catch {
+            if (status) {
+              status.textContent = form.dataset.errorMessage || 'Contact endpoint could not be reached. Please check back soon.';
+              status.dataset.visible = 'true';
+            }
+          } finally {
+            if (submit) {
+              submit.disabled = false;
+            }
           }
         });
       });

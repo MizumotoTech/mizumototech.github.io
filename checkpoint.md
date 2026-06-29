@@ -103,3 +103,39 @@
 ## Next Actions
 
 - Checkpoint 003: Contact Endpoint Skeleton.
+
+# Checkpoint 003 - Contact Endpoint Skeleton
+
+## Produced
+
+- Added a minimal Cloudflare Pages Function at `functions/api/contact.js`.
+- Updated the English contact form to POST JSON to `/api/contact`.
+- Updated the Chinese contact form to POST JSON to `/api/contact`.
+- Preserved native frontend validation and inline contact status messaging.
+
+## Verified
+
+- `POST /api/contact` accepts JSON request bodies.
+- Non-POST methods return controlled 405 JSON.
+- Missing required fields return controlled 400 JSON.
+- Honeypot-filled submissions return generic success-like JSON without exposing anti-spam handling.
+- Valid human submissions return `CONTACT_DELIVERY_NOT_ENABLED` JSON.
+- The frontend does not navigate away on submit and does not show a fake success message.
+- No email, Turnstile, DNS, dependency, CRM, database, analytics, queue, or storage behavior is part of this checkpoint.
+
+## Known Gaps
+
+- No Turnstile validation yet.
+- No email delivery yet.
+- No rate limiting beyond honeypot/basic validation.
+- Contact endpoint intentionally returns delivery-not-enabled status for real submissions.
+- Production contact path is not live for message delivery yet.
+
+## Bugs Caught
+
+- The frontend-only checkpoint could not prove same-origin endpoint wiring. This checkpoint adds the Pages Function route while keeping delivery disabled.
+- The frontend field name for work email previously used a generic `email` key. It now sends the endpoint contract field `workEmail`.
+
+## Next Actions
+
+- Checkpoint 004: Turnstile Frontend and Server-Side Validation.

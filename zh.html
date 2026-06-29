@@ -409,13 +409,15 @@
           <form
             class="contact-form"
             data-contact-form
-            data-disabled-message="联系表单后端尚未启用，请稍后再试。"
+            data-delivery-message="联系表单接口已部署，但邮件发送尚未启用。"
+            data-validation-message="请填写必填项。"
+            data-error-message="联系表单接口暂时无法访问，请稍后再试。"
             aria-describedby="contact-form-note contact-form-status"
           >
             <div class="contact-form-heading">
               <span>Scope first</span>
               <strong>申请评审</strong>
-              <p id="contact-form-note">当前仅完成前端表单，联系后端上线后再接收提交。</p>
+              <p id="contact-form-note">当前表单会调用联系接口，但邮件发送尚未启用。</p>
             </div>
             <div class="contact-form-grid">
               <div class="contact-field">
@@ -428,11 +430,11 @@
               </div>
               <div class="contact-field">
                 <label for="contact-email">工作邮箱</label>
-                <input id="contact-email" name="email" type="email" autocomplete="email" required>
+                <input id="contact-email" name="workEmail" type="email" autocomplete="email" required>
               </div>
               <div class="contact-field">
                 <label for="contact-service">服务方向</label>
-                <select id="contact-service" name="service-area">
+                <select id="contact-service" name="serviceArea">
                   <option value="cloud-cost-hygiene">云成本健康检查</option>
                   <option value="architecture-reliability">架构与可靠性评审</option>
                   <option value="runbook-handover">Runbook 与交接文档包</option>
@@ -450,7 +452,7 @@
             </div>
             <div class="contact-consent">
               <input id="contact-consent" name="consent" type="checkbox" required>
-              <label for="contact-consent">我理解当前前端表单尚未连接后端，在后端启用前不会发送留言。</label>
+              <label for="contact-consent">我理解当前邮件发送尚未启用。</label>
             </div>
             <button class="button primary contact-submit" type="submit">提交评审请求</button>
             <p
@@ -589,12 +591,59 @@
       }
 
       document.querySelectorAll('[data-contact-form]').forEach((form) => {
-        form.addEventListener('submit', (event) => {
+        form.addEventListener('submit', async (event) => {
           event.preventDefault();
           const status = form.querySelector('[data-contact-status]');
+          const submit = form.querySelector('button[type="submit"]');
+          const formData = new FormData(form);
+          const payload = {
+            name: String(formData.get('name') || '').trim(),
+            company: String(formData.get('company') || '').trim(),
+            workEmail: String(formData.get('workEmail') || '').trim(),
+            serviceArea: String(formData.get('serviceArea') || '').trim(),
+            message: String(formData.get('message') || '').trim(),
+            consent: formData.get('consent') === 'on',
+            website: String(formData.get('website') || '').trim()
+          };
+
           if (status) {
-            status.textContent = form.dataset.disabledMessage || '联系表单后端尚未启用，请稍后再试。';
+            status.textContent = '';
+            status.removeAttribute('data-visible');
+          }
+
+          if (submit) {
+            submit.disabled = true;
+          }
+
+          try {
+            const response = await fetch('/api/contact', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(payload)
+            });
+            const result = await response.json().catch(() => ({}));
+            if (!status) {
+              return;
+            }
+            if (result.code === 'CONTACT_DELIVERY_NOT_ENABLED') {
+              status.textContent = form.dataset.deliveryMessage || result.message;
+            } else if (result.code === 'VALIDATION_ERROR') {
+              status.textContent = form.dataset.validationMessage || result.message;
+            } else {
+              status.textContent = form.dataset.deliveryMessage || '联系表单接口已部署，但邮件发送尚未启用。';
+            }
             status.dataset.visible = 'true';
+          } catch {
+            if (status) {
+              status.textContent = form.dataset.errorMessage || '联系表单接口暂时无法访问，请稍后再试。';
+              status.dataset.visible = 'true';
+            }
+          } finally {
+            if (submit) {
+              submit.disabled = false;
+            }
           }
         });
       });
