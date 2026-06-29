@@ -12,7 +12,19 @@ const validationError = {
 const deliveryNotEnabled = {
   ok: false,
   code: "CONTACT_DELIVERY_NOT_ENABLED",
-  message: "Contact endpoint is deployed, but message delivery is not enabled yet."
+  message: "Contact endpoint is protected, but message delivery is not enabled yet."
+};
+
+const turnstileNotConfigured = {
+  ok: false,
+  code: "TURNSTILE_NOT_CONFIGURED",
+  message: "Contact verification is not configured."
+};
+
+const turnstileValidationFailed = {
+  ok: false,
+  code: "TURNSTILE_VALIDATION_FAILED",
+  message: "Human verification failed. Please try again."
 };
 
 const json = (body, status, headers = {}) =>
@@ -26,7 +38,28 @@ const json = (body, status, headers = {}) =>
 
 const textValue = (value) => (typeof value === "string" ? value.trim() : "");
 
-export async function onRequest({ request }) {
+const verifyTurnstile = async ({ secret, token, request }) => {
+  const body = {
+    secret,
+    response: token
+  };
+  const remoteIp = request.headers.get("CF-Connecting-IP");
+  if (remoteIp) {
+    body.remoteip = remoteIp;
+  }
+
+  const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json"
+    },
+    body: JSON.stringify(body)
+  });
+  const result = await response.json().catch(() => ({}));
+  return result.success === true;
+};
+
+export async function onRequest({ request, env }) {
   if (request.method !== "POST") {
     return json(
       {
@@ -64,9 +97,34 @@ export async function onRequest({ request }) {
   const workEmail = textValue(payload.workEmail);
   const message = textValue(payload.message);
   const consent = payload.consent === true;
+  const turnstileToken = textValue(payload.turnstileToken);
 
   if (!name || !workEmail || !message || !consent) {
     return json(validationError, 400);
+  }
+
+  if (!turnstileToken) {
+    return json(turnstileValidationFailed, 403);
+  }
+
+  const turnstileSecret = textValue(env?.TURNSTILE_SECRET_KEY);
+  if (!turnstileSecret) {
+    return json(turnstileNotConfigured, 500);
+  }
+
+  let turnstileOk = false;
+  try {
+    turnstileOk = await verifyTurnstile({
+      secret: turnstileSecret,
+      token: turnstileToken,
+      request
+    });
+  } catch {
+    turnstileOk = false;
+  }
+
+  if (!turnstileOk) {
+    return json(turnstileValidationFailed, 403);
   }
 
   return json(deliveryNotEnabled, 503);

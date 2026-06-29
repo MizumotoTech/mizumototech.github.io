@@ -1282,6 +1282,10 @@ h3 {
   accent-color: #8db4ff;
 }
 
+.contact-turnstile {
+  min-height: 65px;
+}
+
 .contact-submit {
   width: fit-content;
   border-color: #ffffff;

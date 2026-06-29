@@ -21,6 +21,7 @@
     <link rel="alternate" hreflang="en" href="https://mizumoto.tech/">
     <link rel="alternate" hreflang="zh-Hans" href="https://mizumoto.tech/zh.html">
     <link rel="stylesheet" href="assets/css/site.css">
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   </head>
   <body>
     <aside class="section-indicator" aria-label="页面章节">
@@ -411,6 +412,8 @@
             data-contact-form
             data-delivery-message="联系表单接口已部署，但邮件发送尚未启用。"
             data-validation-message="请填写必填项。"
+            data-turnstile-message="人机验证失败，请重试。"
+            data-config-message="联系表单验证尚未配置。"
             data-error-message="联系表单接口暂时无法访问，请稍后再试。"
             aria-describedby="contact-form-note contact-form-status"
           >
@@ -453,6 +456,9 @@
             <div class="contact-consent">
               <input id="contact-consent" name="consent" type="checkbox" required>
               <label for="contact-consent">我理解当前邮件发送尚未启用。</label>
+            </div>
+            <div class="contact-turnstile">
+              <div class="cf-turnstile" data-sitekey="0x4AAAAAADslGqz8lpWh-Kw8"></div>
             </div>
             <button class="button primary contact-submit" type="submit">提交评审请求</button>
             <p
@@ -603,7 +609,8 @@
             serviceArea: String(formData.get('serviceArea') || '').trim(),
             message: String(formData.get('message') || '').trim(),
             consent: formData.get('consent') === 'on',
-            website: String(formData.get('website') || '').trim()
+            website: String(formData.get('website') || '').trim(),
+            turnstileToken: String(formData.get('cf-turnstile-response') || '').trim()
           };
 
           if (status) {
@@ -631,6 +638,10 @@
               status.textContent = form.dataset.deliveryMessage || result.message;
             } else if (result.code === 'VALIDATION_ERROR') {
               status.textContent = form.dataset.validationMessage || result.message;
+            } else if (result.code === 'TURNSTILE_VALIDATION_FAILED') {
+              status.textContent = form.dataset.turnstileMessage || result.message;
+            } else if (result.code === 'TURNSTILE_NOT_CONFIGURED') {
+              status.textContent = form.dataset.configMessage || result.message;
             } else {
               status.textContent = form.dataset.deliveryMessage || '联系表单接口已部署，但邮件发送尚未启用。';
             }

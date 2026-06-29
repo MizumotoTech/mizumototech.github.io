@@ -139,3 +139,39 @@
 ## Next Actions
 
 - Checkpoint 004: Turnstile Frontend and Server-Side Validation.
+
+# Checkpoint 004 - Turnstile Frontend and Server-Side Validation
+
+## Produced
+
+- Added the Cloudflare Turnstile script to `index.html` and `zh.html`.
+- Added Turnstile widgets inside both contact forms using the public site key.
+- Updated frontend JSON submission to include the token from `cf-turnstile-response`.
+- Added server-side Turnstile Siteverify validation in `functions/api/contact.js`.
+- Kept email delivery disabled after successful verification.
+
+## Verified
+
+- `functions/api/contact.js` still returns controlled JSON for non-POST methods.
+- Required field validation still runs before Turnstile validation.
+- Honeypot-filled submissions still return generic success-like JSON without calling Turnstile.
+- Missing Turnstile tokens return controlled `TURNSTILE_VALIDATION_FAILED` JSON.
+- Missing `TURNSTILE_SECRET_KEY` returns controlled `TURNSTILE_NOT_CONFIGURED` JSON.
+- Successful Turnstile validation continues to `CONTACT_DELIVERY_NOT_ENABLED`.
+- No email, DNS, dependency, CRM, database, analytics, queue, or storage behavior is part of this checkpoint.
+
+## Known Gaps
+
+- No email delivery yet.
+- No rate limiting beyond Turnstile, honeypot, and basic validation.
+- Contact endpoint still intentionally returns delivery-not-enabled status for real submissions.
+- Production contact path is not live for message delivery yet.
+
+## Bugs Caught
+
+- The contact endpoint skeleton accepted valid-looking human submissions without human verification. This checkpoint requires a Turnstile token and validates it server-side.
+- The frontend payload previously had no verification token. It now includes the value generated as `cf-turnstile-response`.
+
+## Next Actions
+
+- Checkpoint 005: Email Delivery Skeleton.
