@@ -405,14 +405,62 @@
               可以先提供当前云环境基线、交付流程，以及最想降低的第一个运营风险。
               商务条件会根据合作模式、交付边界和响应预期确定。
             </p>
-            <p class="contact-email">
-              申请范围评审：<span>mizumoto#mizumoto.tech</span> <small>请将 # 替换为 @</small>
-            </p>
           </div>
-          <div class="scope-note">
-            <span>Scope first</span>
-            <strong>实施前先形成可评审计划</strong>
-          </div>
+          <form
+            class="contact-form"
+            data-contact-form
+            data-disabled-message="联系表单后端尚未启用，请稍后再试。"
+            aria-describedby="contact-form-note contact-form-status"
+          >
+            <div class="contact-form-heading">
+              <span>Scope first</span>
+              <strong>申请评审</strong>
+              <p id="contact-form-note">当前仅完成前端表单，联系后端上线后再接收提交。</p>
+            </div>
+            <div class="contact-form-grid">
+              <div class="contact-field">
+                <label for="contact-name">姓名</label>
+                <input id="contact-name" name="name" type="text" autocomplete="name" required>
+              </div>
+              <div class="contact-field">
+                <label for="contact-company">公司</label>
+                <input id="contact-company" name="company" type="text" autocomplete="organization">
+              </div>
+              <div class="contact-field">
+                <label for="contact-email">工作邮箱</label>
+                <input id="contact-email" name="email" type="email" autocomplete="email" required>
+              </div>
+              <div class="contact-field">
+                <label for="contact-service">服务方向</label>
+                <select id="contact-service" name="service-area">
+                  <option value="cloud-cost-hygiene">云成本健康检查</option>
+                  <option value="architecture-reliability">架构与可靠性评审</option>
+                  <option value="runbook-handover">Runbook 与交接文档包</option>
+                  <option value="not-sure-yet" selected>暂不确定</option>
+                </select>
+              </div>
+            </div>
+            <div class="contact-field">
+              <label for="contact-message">留言</label>
+              <textarea id="contact-message" name="message" rows="5" required></textarea>
+            </div>
+            <div class="contact-honeypot" aria-hidden="true">
+              <label for="contact-website">网站</label>
+              <input id="contact-website" name="website" type="text" tabindex="-1" autocomplete="off">
+            </div>
+            <div class="contact-consent">
+              <input id="contact-consent" name="consent" type="checkbox" required>
+              <label for="contact-consent">我理解当前前端表单尚未连接后端，在后端启用前不会发送留言。</label>
+            </div>
+            <button class="button primary contact-submit" type="submit">提交评审请求</button>
+            <p
+              class="contact-status"
+              id="contact-form-status"
+              data-contact-status
+              role="status"
+              aria-live="polite"
+            ></p>
+          </form>
         </div>
       </section>
     </main>
@@ -539,6 +587,17 @@
           }
         });
       }
+
+      document.querySelectorAll('[data-contact-form]').forEach((form) => {
+        form.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const status = form.querySelector('[data-contact-status]');
+          if (status) {
+            status.textContent = form.dataset.disabledMessage || '联系表单后端尚未启用，请稍后再试。';
+            status.dataset.visible = 'true';
+          }
+        });
+      });
     </script>
   </body>
 </html>
