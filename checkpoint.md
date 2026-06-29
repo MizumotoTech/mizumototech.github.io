@@ -214,3 +214,41 @@
 ## Next Actions
 
 - Checkpoint 006: Internal Notification Webhook.
+
+# Checkpoint 006 - Internal Notification Webhook
+
+## Produced
+
+- Added a best-effort Telegram internal notification attempt after successful D1 contact inquiry storage.
+- Kept D1 as the source of truth; Telegram is only an internal alert channel.
+- Added D1 status updates for notification outcomes: `notified` when Telegram succeeds and `stored_notification_failed` when Telegram is missing or fails.
+- Kept the Telegram message to a minimal internal summary without the full inquiry message body, Turnstile token, or raw User-Agent.
+- Updated the `/api/contact` success response message to state that internal notification status is tracked separately.
+
+## Verified
+
+- D1 insert still succeeds before any Telegram notification attempt.
+- Telegram success does not change the user-facing response code; the endpoint still returns `CONTACT_INQUIRY_RECORDED`.
+- Missing Telegram environment variables do not fail the contact submission.
+- Telegram API failure does not fail the contact submission.
+- Inquiry status becomes `notified` when Telegram succeeds.
+- Inquiry status becomes `stored_notification_failed` when Telegram environment variables are missing or Telegram fails.
+- Full inquiry message body is not sent to Telegram.
+- No email, customer auto-reply, DNS, dependency, CRM, analytics, queue, KV, R2, Durable Object, or admin dashboard behavior is part of this checkpoint.
+
+## Known Gaps
+
+- No customer auto-reply.
+- No email delivery.
+- No admin dashboard.
+- No formal CRM.
+- Contact form live copy is not finalized until webhook behavior is verified on Cloudflare Pages preview.
+
+## Bugs Caught
+
+- The previous stored-in-D1 success path had no internal alert channel, so new inquiries could be recorded without an operator-facing notification.
+- Notification failure could have been coupled to the user submission path. This checkpoint keeps the inquiry recorded and tracks notification failure in D1 instead.
+
+## Next Actions
+
+- Checkpoint 007: Contact Form Live Copy.

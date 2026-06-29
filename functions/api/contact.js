@@ -109,6 +109,53 @@ const verifyTurnstile = async ({ secret, token, request }) => {
   return result.success === true;
 };
 
+const sendTelegramNotification = async ({ env, id, serviceArea, company, workEmail }) => {
+  const botToken = textValue(env?.TELEGRAM_BOT_TOKEN);
+  const chatId = textValue(env?.TELEGRAM_CHAT_ID);
+  if (!botToken || !chatId) {
+    return false;
+  }
+
+  const text = [
+    "New Mizumoto Tech inquiry",
+    `ID: ${id}`,
+    `Service area: ${serviceArea || "-"}`,
+    `Company: ${company || "-"}`,
+    `Reply contact: ${workEmail}`,
+    "Status: stored in D1",
+    "Full message: check Cloudflare D1"
+  ].join("\n");
+
+  try {
+    const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text,
+        disable_web_page_preview: true
+      })
+    });
+    const result = await response.json().catch(() => ({}));
+    return response.ok && result.ok === true;
+  } catch {
+    return false;
+  }
+};
+
+const updateInquiryStatus = async (contactDb, id, status) => {
+  try {
+    await contactDb
+      .prepare("UPDATE contact_inquiries SET status = ? WHERE id = ?")
+      .bind(status, id)
+      .run();
+  } catch {
+    // D1 insert is the success boundary; notification status is best-effort.
+  }
+};
+
 export async function onRequest({ request, env }) {
   if (request.method !== "POST") {
     return json(
@@ -193,6 +240,10 @@ export async function onRequest({ request, env }) {
   const userAgentHash = await hashUserAgent(request.headers.get("User-Agent"));
   const cfCountry = truncateText(request.cf?.country, 32);
   const cfColo = truncateText(request.cf?.colo, 32);
+  const storedName = truncateText(payload.name, 200);
+  const storedCompany = truncateText(payload.company, 200);
+  const storedWorkEmail = truncateText(payload.workEmail, 320);
+  const storedServiceArea = truncateText(payload.serviceArea, 120);
 
   try {
     await contactDb
@@ -216,10 +267,10 @@ export async function onRequest({ request, env }) {
         id,
         createdAt,
         sourcePage,
-        truncateText(payload.name, 200),
-        truncateText(payload.company, 200),
-        truncateText(payload.workEmail, 320),
-        truncateText(payload.serviceArea, 120),
+        storedName,
+        storedCompany,
+        storedWorkEmail,
+        storedServiceArea,
         message,
         "new",
         userAgentHash,
@@ -231,11 +282,24 @@ export async function onRequest({ request, env }) {
     return json(contactStorageFailed, 500);
   }
 
+  const notificationOk = await sendTelegramNotification({
+    env,
+    id,
+    serviceArea: storedServiceArea,
+    company: storedCompany,
+    workEmail: storedWorkEmail
+  });
+  await updateInquiryStatus(
+    contactDb,
+    id,
+    notificationOk ? "notified" : "stored_notification_failed"
+  );
+
   return json(
     {
       ok: true,
       code: "CONTACT_INQUIRY_RECORDED",
-      message: "Your request has been recorded. Notification is not enabled yet.",
+      message: "Your request has been recorded. Internal notification status is tracked separately.",
       id
     },
     200
