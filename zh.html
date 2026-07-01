@@ -459,7 +459,7 @@
             </div>
             <div class="contact-consent">
               <input id="contact-consent" name="consent" type="checkbox" required>
-              <label for="contact-consent">我理解该请求会先进行范围评估，并不代表合作已经开始。</label>
+              <label for="contact-consent">我同意水本云科技处理我提交的信息，用于评估该请求并在适合时进行后续联系。</label>
             </div>
             <div class="contact-turnstile">
               <div class="cf-turnstile" data-sitekey="0x4AAAAAADslGqz8lpWh-Kw8"></div>
@@ -495,6 +495,16 @@
     <dialog class="photo-dialog" aria-label="Ruiyuan Mizumoto Xu 照片">
       <button class="photo-dialog-close" type="button" data-photo-close aria-label="关闭照片预览">关闭</button>
       <img src="assets/pic/avatar_03_study_square.jpg" alt="Ruiyuan Mizumoto Xu">
+    </dialog>
+
+    <dialog class="contact-success-dialog" data-contact-success-dialog aria-labelledby="contact-success-title" aria-describedby="contact-success-body">
+      <div class="contact-success-card">
+        <h2 id="contact-success-title">请求已收到</h2>
+        <p id="contact-success-body">你的请求已收到。我会评估范围，如适合会后续联系。</p>
+        <div class="contact-success-actions">
+          <button class="button primary contact-success-close" type="button" data-contact-success-close>确认</button>
+        </div>
+      </div>
     </dialog>
 
     <div class="contact-submit-overlay" data-contact-submit-overlay aria-hidden="true">
@@ -607,6 +617,49 @@
         });
       }
 
+      const contactSuccessDialog = document.querySelector('[data-contact-success-dialog]');
+      const contactSuccessClose = document.querySelector('[data-contact-success-close]');
+      const closeContactSuccessDialog = () => {
+        if (!contactSuccessDialog) {
+          return;
+        }
+        if (typeof contactSuccessDialog.close === 'function') {
+          contactSuccessDialog.close();
+        } else {
+          contactSuccessDialog.removeAttribute('open');
+          contactSuccessDialog.removeAttribute('aria-modal');
+        }
+      };
+      const showContactSuccessDialog = () => {
+        if (!contactSuccessDialog) {
+          return;
+        }
+        try {
+          if (typeof contactSuccessDialog.showModal === 'function') {
+            if (!contactSuccessDialog.open) {
+              contactSuccessDialog.showModal();
+            }
+          } else {
+            contactSuccessDialog.setAttribute('open', '');
+            contactSuccessDialog.setAttribute('aria-modal', 'true');
+            if (contactSuccessClose) {
+              contactSuccessClose.focus();
+            }
+          }
+        } catch {
+          contactSuccessDialog.setAttribute('open', '');
+        }
+      };
+
+      if (contactSuccessDialog && contactSuccessClose) {
+        contactSuccessClose.addEventListener('click', closeContactSuccessDialog);
+        contactSuccessDialog.addEventListener('click', (event) => {
+          if (event.target === contactSuccessDialog) {
+            closeContactSuccessDialog();
+          }
+        });
+      }
+
       document.querySelectorAll('[data-contact-form]').forEach((form) => {
         form.addEventListener('submit', async (event) => {
           event.preventDefault();
@@ -696,6 +749,7 @@
               if (submit) {
                 submit.textContent = form.dataset.submittedLabel || '已提交';
               }
+              showContactSuccessDialog();
             } else if (result.code === 'VALIDATION_ERROR') {
               status.textContent = form.dataset.validationMessage || result.message;
             } else if (result.code === 'TURNSTILE_VALIDATION_FAILED') {

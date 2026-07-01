@@ -371,3 +371,47 @@
 - Checkpoint 008: Production Domain and DNS Cutover Planning.
 - Optional later: rate-limit hardening.
 - Optional later: admin/review workflow.
+
+# Checkpoint 007A - Contact Success Dialog and Privacy Consent Copy
+
+## Produced
+
+- Added localized success confirmation dialogs to the English and Chinese contact forms.
+- Opened the success dialog only after `CONTACT_INQUIRY_RECORDED`.
+- Preserved the inline success message after successful submission.
+- Preserved the submitted state after success: disabled controls, greyed-out form, and submitted button label.
+- Added dialog close behavior that does not re-enable the submitted form.
+- Replaced the scope-fit consent checkbox copy with privacy/contact-data processing consent copy.
+- Added restrained contact success dialog styling without new dependencies or external assets.
+
+## Verified
+
+- `git diff --check` passes.
+- Inline scripts in `index.html` and `zh.html` parse successfully.
+- A local DOM harness using the real inline contact script verifies that successful English and Chinese submissions open the localized success dialog.
+- The same harness verifies that closing the dialog keeps the form submitted, disabled, and greyed out.
+- The same harness verifies that error responses do not open the success dialog and remain retryable.
+- Browser verification with a same-origin mock endpoint confirms updated English and Chinese consent copy renders.
+- Browser verification confirms successful English and Chinese submissions show inline success and the localized success dialog.
+- Browser verification confirms the dialog close button works and the form remains disabled after close.
+- Browser verification with an error response confirms the success dialog does not open and the form remains editable.
+- Browser verification with a delayed same-origin mock endpoint confirms the pending overlay still appears while submitting.
+- No backend, D1, Telegram, DNS, dependency, CRM, analytics, queue, KV, R2, Durable Object, email, or customer auto-reply behavior is part of this checkpoint.
+
+## Known Gaps
+
+- No full Privacy Notice page yet.
+- No customer auto-reply.
+- No admin dashboard.
+- No formal CRM.
+- No rate limiting beyond Turnstile, honeypot, and basic validation.
+- No production-domain cutover yet if `mizumoto.tech` is not already pointed to Cloudflare Pages.
+
+## Bugs Caught
+
+- The previous consent copy described scope-fit review, but did not explicitly state contact-data processing consent.
+- The previous successful submission state relied only on inline status, which made the completion signal easier to miss.
+
+## Next Actions
+
+- Checkpoint 008: Production Domain and DNS Cutover Planning.

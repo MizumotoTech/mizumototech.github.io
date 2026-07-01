@@ -1412,6 +1412,53 @@ h3 {
   }
 }
 
+.contact-success-dialog {
+  width: min(92vw, 440px);
+  padding: 0;
+  border: 1px solid rgba(16, 24, 40, 0.12);
+  border-radius: var(--radius);
+  background: #ffffff;
+  box-shadow: var(--shadow-card);
+  color: var(--ink-strong);
+}
+
+.contact-success-dialog::backdrop {
+  background: rgba(7, 17, 31, 0.52);
+  backdrop-filter: blur(8px);
+}
+
+.contact-success-card {
+  display: grid;
+  gap: 14px;
+  padding: 28px;
+}
+
+.contact-success-card h2 {
+  margin: 0;
+  color: var(--ink-strong);
+  font-size: 22px;
+  line-height: 1.25;
+}
+
+.contact-success-card p {
+  margin: 0;
+  color: var(--muted-strong);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.contact-success-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 6px;
+}
+
+.contact-success-close {
+  min-width: 86px;
+  cursor: pointer;
+  font: inherit;
+}
+
 .site-footer {
   display: flex;
   align-items: center;

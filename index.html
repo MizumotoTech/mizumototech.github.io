@@ -475,7 +475,7 @@
             </div>
             <div class="contact-consent">
               <input id="contact-consent" name="consent" type="checkbox" required>
-              <label for="contact-consent">I understand this request will be reviewed for scope fit before any engagement starts.</label>
+              <label for="contact-consent">I agree that Mizumoto Tech may process my submitted information to review this request and follow up if appropriate.</label>
             </div>
             <div class="contact-turnstile">
               <div class="cf-turnstile" data-sitekey="0x4AAAAAADslGqz8lpWh-Kw8"></div>
@@ -511,6 +511,16 @@
     <dialog class="photo-dialog" aria-label="Ruiyuan Mizumoto Xu photo">
       <button class="photo-dialog-close" type="button" data-photo-close aria-label="Close photo preview">Close</button>
       <img src="assets/pic/avatar_03_study_square.jpg" alt="Ruiyuan Mizumoto Xu">
+    </dialog>
+
+    <dialog class="contact-success-dialog" data-contact-success-dialog aria-labelledby="contact-success-title" aria-describedby="contact-success-body">
+      <div class="contact-success-card">
+        <h2 id="contact-success-title">Request received</h2>
+        <p id="contact-success-body">Your request has been received. I will review the scope and follow up if it is a fit.</p>
+        <div class="contact-success-actions">
+          <button class="button primary contact-success-close" type="button" data-contact-success-close>OK</button>
+        </div>
+      </div>
     </dialog>
 
     <div class="contact-submit-overlay" data-contact-submit-overlay aria-hidden="true">
@@ -623,6 +633,49 @@
         });
       }
 
+      const contactSuccessDialog = document.querySelector('[data-contact-success-dialog]');
+      const contactSuccessClose = document.querySelector('[data-contact-success-close]');
+      const closeContactSuccessDialog = () => {
+        if (!contactSuccessDialog) {
+          return;
+        }
+        if (typeof contactSuccessDialog.close === 'function') {
+          contactSuccessDialog.close();
+        } else {
+          contactSuccessDialog.removeAttribute('open');
+          contactSuccessDialog.removeAttribute('aria-modal');
+        }
+      };
+      const showContactSuccessDialog = () => {
+        if (!contactSuccessDialog) {
+          return;
+        }
+        try {
+          if (typeof contactSuccessDialog.showModal === 'function') {
+            if (!contactSuccessDialog.open) {
+              contactSuccessDialog.showModal();
+            }
+          } else {
+            contactSuccessDialog.setAttribute('open', '');
+            contactSuccessDialog.setAttribute('aria-modal', 'true');
+            if (contactSuccessClose) {
+              contactSuccessClose.focus();
+            }
+          }
+        } catch {
+          contactSuccessDialog.setAttribute('open', '');
+        }
+      };
+
+      if (contactSuccessDialog && contactSuccessClose) {
+        contactSuccessClose.addEventListener('click', closeContactSuccessDialog);
+        contactSuccessDialog.addEventListener('click', (event) => {
+          if (event.target === contactSuccessDialog) {
+            closeContactSuccessDialog();
+          }
+        });
+      }
+
       document.querySelectorAll('[data-contact-form]').forEach((form) => {
         form.addEventListener('submit', async (event) => {
           event.preventDefault();
@@ -712,6 +765,7 @@
               if (submit) {
                 submit.textContent = form.dataset.submittedLabel || 'Request submitted';
               }
+              showContactSuccessDialog();
             } else if (result.code === 'VALIDATION_ERROR') {
               status.textContent = form.dataset.validationMessage || result.message;
             } else if (result.code === 'TURNSTILE_VALIDATION_FAILED') {
