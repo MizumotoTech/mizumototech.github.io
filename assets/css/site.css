@@ -1293,6 +1293,13 @@ h3 {
   font: inherit;
 }
 
+.contact-submit:disabled,
+.contact-form[data-pending="true"] .contact-submit {
+  cursor: progress;
+  opacity: 0.72;
+  transform: none;
+}
+
 .contact-status {
   min-height: 24px;
   margin: 0;
@@ -1306,6 +1313,34 @@ h3 {
   border: 1px solid rgba(141, 180, 255, 0.3);
   border-radius: var(--radius);
   background: rgba(141, 180, 255, 0.11);
+}
+
+.contact-status[data-state="pending"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contact-spinner {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  border: 2px solid rgba(216, 229, 255, 0.36);
+  border-top-color: #d8e5ff;
+  border-radius: 50%;
+  animation: contact-spin 720ms linear infinite;
+}
+
+@keyframes contact-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-spinner {
+    animation: none;
+  }
 }
 
 .contact-honeypot {

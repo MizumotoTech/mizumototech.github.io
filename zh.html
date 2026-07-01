@@ -417,6 +417,7 @@
             data-storage-config-message="联系表单存储尚未配置。"
             data-config-message="联系表单验证尚未配置。"
             data-error-message="联系表单接口暂时无法访问，请稍后再试。"
+            data-pending-message="正在提交……"
             aria-describedby="contact-form-note contact-form-status"
           >
             <div class="contact-form-heading">
@@ -601,8 +602,20 @@
       document.querySelectorAll('[data-contact-form]').forEach((form) => {
         form.addEventListener('submit', async (event) => {
           event.preventDefault();
+          if (form.dataset.pending === 'true') {
+            return;
+          }
           const status = form.querySelector('[data-contact-status]');
           const submit = form.querySelector('button[type="submit"]');
+          const resetTurnstile = () => {
+            if (window.turnstile && typeof window.turnstile.reset === 'function') {
+              try {
+                window.turnstile.reset();
+              } catch {
+                // Turnstile retry reset is best-effort.
+              }
+            }
+          };
           const formData = new FormData(form);
           const payload = {
             name: String(formData.get('name') || '').trim(),
@@ -617,9 +630,18 @@
           };
 
           if (status) {
-            status.textContent = '';
-            status.removeAttribute('data-visible');
+            const spinner = document.createElement('span');
+            const pendingText = document.createElement('span');
+            spinner.className = 'contact-spinner';
+            spinner.setAttribute('aria-hidden', 'true');
+            pendingText.textContent = form.dataset.pendingMessage || '正在提交……';
+            status.replaceChildren(spinner, pendingText);
+            status.dataset.visible = 'true';
+            status.dataset.state = 'pending';
           }
+
+          form.dataset.pending = 'true';
+          form.setAttribute('aria-busy', 'true');
 
           if (submit) {
             submit.disabled = true;
@@ -637,6 +659,7 @@
             if (!status) {
               return;
             }
+            delete status.dataset.state;
             if (result.code === 'CONTACT_INQUIRY_RECORDED') {
               status.textContent = form.dataset.recordedMessage || result.message;
             } else if (result.code === 'VALIDATION_ERROR') {
@@ -652,13 +675,20 @@
             } else {
               status.textContent = form.dataset.errorMessage || '联系表单接口暂时无法访问，请稍后再试。';
             }
+            if (result.code !== 'CONTACT_INQUIRY_RECORDED') {
+              resetTurnstile();
+            }
             status.dataset.visible = 'true';
           } catch {
             if (status) {
+              delete status.dataset.state;
               status.textContent = form.dataset.errorMessage || '联系表单接口暂时无法访问，请稍后再试。';
               status.dataset.visible = 'true';
             }
+            resetTurnstile();
           } finally {
+            delete form.dataset.pending;
+            form.removeAttribute('aria-busy');
             if (submit) {
               submit.disabled = false;
             }

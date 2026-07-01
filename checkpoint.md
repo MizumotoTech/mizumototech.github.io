@@ -252,3 +252,43 @@
 ## Next Actions
 
 - Checkpoint 007: Contact Form Live Copy.
+
+# Checkpoint 006A - Contact Submit Pending State
+
+## Produced
+
+- Added localized pending status text for the English and Chinese contact forms.
+- Added a visible CSS-only spinner in the existing contact status area while submission is pending.
+- Added a form-level pending guard to prevent duplicate submissions while `/api/contact` is in flight.
+- Added `aria-busy` on the form during pending submission and restored it after a terminal response or network error.
+- Kept existing response-code mapping and form data preservation behavior.
+- Added best-effort Turnstile reset after failed requests so normal retries do not require a page refresh when reset is available.
+
+## Verified
+
+- `git diff --check` passes.
+- Inline scripts in `index.html` and `zh.html` parse successfully.
+- A local DOM harness using the real inline contact script verifies that the English pending state shows `Submitting...` with a spinner immediately after submit.
+- A local DOM harness using the real inline contact script verifies that the Chinese pending state shows `正在提交……` with a spinner immediately after submit.
+- The same harness verifies that the submit button is disabled while pending and duplicate submit attempts are ignored while pending.
+- The same harness verifies that final success responses replace pending text with the existing recorded/status message.
+- The same harness verifies that error responses restore submit ability, keep the existing localized error/status mapping, and call best-effort Turnstile reset when available.
+- Browser preview loading confirms the contact form remains present and visible; full synthetic click submission was limited by the in-app browser control layer and should still be checked on Cloudflare Pages preview.
+- No backend, D1, Telegram, DNS, dependency, CRM, analytics, queue, KV, R2, Durable Object, email, or customer auto-reply behavior is part of this checkpoint.
+
+## Known Gaps
+
+- Contact form live copy is still not finalized.
+- No customer auto-reply.
+- No admin dashboard.
+- No formal CRM.
+- Turnstile retry behavior may still require widget reset depending on error type.
+
+## Bugs Caught
+
+- The contact form could appear frozen while Turnstile, D1, or Telegram processing was in flight.
+- The previous frontend disabled the button during fetch, but did not have a form-level pending guard for duplicate submit events.
+
+## Next Actions
+
+- Checkpoint 007: Contact Form Live Copy.
