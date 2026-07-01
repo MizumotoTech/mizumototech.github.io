@@ -1315,34 +1315,6 @@ h3 {
   background: rgba(141, 180, 255, 0.11);
 }
 
-.contact-status[data-state="pending"] {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.contact-spinner {
-  width: 14px;
-  height: 14px;
-  flex: 0 0 auto;
-  border: 2px solid rgba(216, 229, 255, 0.36);
-  border-top-color: #d8e5ff;
-  border-radius: 50%;
-  animation: contact-spin 720ms linear infinite;
-}
-
-@keyframes contact-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .contact-spinner {
-    animation: none;
-  }
-}
-
 .contact-honeypot {
   position: absolute;
   left: -10000px;
@@ -1351,6 +1323,68 @@ h3 {
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
+}
+
+.contact-submit-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(248, 250, 252, 0.82);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 160ms ease, visibility 160ms ease;
+}
+
+.contact-submit-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.contact-submit-card {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  width: min(100%, 320px);
+  padding: 28px;
+  border: 1px solid rgba(16, 24, 40, 0.12);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: var(--shadow-card);
+  color: var(--ink-strong);
+  font-size: 15px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.contact-submit-spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(26, 92, 255, 0.18);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: contact-submit-spin 760ms linear infinite;
+}
+
+@keyframes contact-submit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-submit-overlay {
+    transition: none;
+  }
+
+  .contact-submit-spinner {
+    animation: none;
+  }
 }
 
 .site-footer {

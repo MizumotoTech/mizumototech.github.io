@@ -292,3 +292,39 @@
 ## Next Actions
 
 - Checkpoint 007: Contact Form Live Copy.
+
+# Checkpoint 006B - Contact Submit Blocking Overlay
+
+## Produced
+
+- Added one full-viewport contact submit overlay to the English page.
+- Added one full-viewport contact submit overlay to the Chinese page.
+- Replaced the inline pending spinner behavior with overlay show/hide behavior while preserving the existing final status area.
+- Added restrained overlay, loading card, and CSS-only spinner styles with reduced-motion support.
+- Preserved pending guard, disabled submit button behavior, `aria-busy`, existing response-code mapping, and best-effort Turnstile reset after failures.
+
+## Verified
+
+- `git diff --check` passes.
+- Inline scripts in `index.html` and `zh.html` parse successfully.
+- A local DOM harness using the real inline contact script verifies that the English overlay becomes visible during pending submission and hides after success.
+- A local DOM harness using the real inline contact script verifies that the Chinese overlay becomes visible during pending submission and hides after success.
+- The same harness verifies overlay hide behavior after error, duplicate-submit prevention, submit button restoration, and existing success/error status mapping.
+- Browser preview loading confirms the contact form and overlay markup are present; full synthetic form submission should still be checked on Cloudflare Pages preview with the real browser environment.
+- No backend, D1, Telegram, DNS, dependency, CRM, analytics, queue, KV, R2, Durable Object, email, or customer auto-reply behavior is part of this checkpoint.
+
+## Known Gaps
+
+- Contact form live copy is still not finalized.
+- No customer auto-reply.
+- No admin dashboard.
+- No formal CRM.
+
+## Bugs Caught
+
+- The inline pending state did not fully block background interaction while the request was in flight.
+- Pending feedback could be too easy to miss because it appeared only inside the contact form status area.
+
+## Next Actions
+
+- Checkpoint 007: Contact Form Live Copy.
