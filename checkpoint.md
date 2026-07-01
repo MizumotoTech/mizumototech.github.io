@@ -328,3 +328,46 @@
 ## Next Actions
 
 - Checkpoint 007: Contact Form Live Copy.
+
+# Checkpoint 007 - Contact Form Live Copy and Submitted State
+
+## Produced
+
+- Updated English and Chinese contact section helper copy for live use.
+- Updated English and Chinese success messages to conservative received-and-review copy.
+- Removed user-facing references to internal notification, D1, Telegram, and backend implementation details from the active contact form path.
+- Added a submitted state after `CONTACT_INQUIRY_RECORDED`.
+- Disabled all form controls after successful submission and changed the submit button text to a submitted-state label.
+- Added submitted-state styling that greys out the form controls while keeping the final status message visible.
+- Aligned the `/api/contact` success response message with the live frontend success copy without changing endpoint logic.
+
+## Verified
+
+- `git diff --check` passes.
+- Inline scripts in `index.html` and `zh.html` parse successfully.
+- `node --check functions/api/contact.js` passes.
+- A local DOM harness using the real inline contact script verifies that successful English submissions show the conservative success message, disable all controls, preserve input values, and change the submit button to `Request submitted`.
+- A local DOM harness using the real inline contact script verifies that successful Chinese submissions show the conservative success message, disable all controls, preserve input values, and change the submit button to `已提交`.
+- The same harness verifies that error responses do not enter submitted state and remain retryable.
+- Pending overlay behavior remains present in the submit path.
+- Browser preview loading confirms the English and Chinese live copy renders, the form is not submitted by default, and static-server error responses keep the form editable and retryable.
+- No email, customer auto-reply, DNS, dependency, CRM, analytics, queue, KV, R2, Durable Object, or admin dashboard behavior is part of this checkpoint.
+
+## Known Gaps
+
+- No customer auto-reply.
+- No admin dashboard.
+- No formal CRM.
+- No rate limiting beyond Turnstile, honeypot, and basic validation.
+- No production-domain cutover yet if `mizumoto.tech` is not already pointed to Cloudflare Pages.
+
+## Bugs Caught
+
+- Previous live-path copy still described internal notification state instead of a customer-safe received-and-review message.
+- Previous successful submissions allowed the form to become editable again after the backend returned success, which could invite accidental duplicate submissions.
+
+## Next Actions
+
+- Checkpoint 008: Production Domain and DNS Cutover Planning.
+- Optional later: rate-limit hardening.
+- Optional later: admin/review workflow.

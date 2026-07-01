@@ -418,16 +418,15 @@
             <p class="eyebrow">Contact</p>
             <h2 id="contact-title">Start with a scoped review, not an open-ended consulting engagement.</h2>
             <p>
-              Share the current cloud baseline, delivery workflow, and the first
-              operational risk you want reduced. Commercial terms are scoped
-              based on the engagement model, delivery boundaries, and response
-              expectations.
+              Share a short description of your cloud reliability, cost,
+              architecture, or handover concern. I will review the scope and
+              follow up if it is a fit.
             </p>
           </div>
           <form
             class="contact-form"
             data-contact-form
-            data-recorded-message="Your request has been recorded. Notification is not enabled yet."
+            data-recorded-message="Your request has been received. I will review the scope and follow up if it is a fit."
             data-validation-message="Please complete the required fields."
             data-turnstile-message="Human verification failed. Please try again."
             data-storage-message="Contact inquiry could not be recorded."
@@ -435,12 +434,13 @@
             data-config-message="Contact verification is not configured."
             data-error-message="Contact endpoint could not be reached. Please check back soon."
             data-pending-message="Submitting..."
+            data-submitted-label="Request submitted"
             aria-describedby="contact-form-note contact-form-status"
           >
             <div class="contact-form-heading">
               <span>Scope first</span>
               <strong>Request a review</strong>
-              <p id="contact-form-note">This form records verified inquiries, but internal notification is not enabled yet.</p>
+              <p id="contact-form-note">Share enough context to decide whether a scoped review is appropriate.</p>
             </div>
             <div class="contact-form-grid">
               <div class="contact-field">
@@ -475,7 +475,7 @@
             </div>
             <div class="contact-consent">
               <input id="contact-consent" name="consent" type="checkbox" required>
-              <label for="contact-consent">I understand internal notification is not enabled yet.</label>
+              <label for="contact-consent">I understand this request will be reviewed for scope fit before any engagement starts.</label>
             </div>
             <div class="contact-turnstile">
               <div class="cf-turnstile" data-sitekey="0x4AAAAAADslGqz8lpWh-Kw8"></div>
@@ -626,11 +626,12 @@
       document.querySelectorAll('[data-contact-form]').forEach((form) => {
         form.addEventListener('submit', async (event) => {
           event.preventDefault();
-          if (form.dataset.pending === 'true') {
+          if (form.dataset.pending === 'true' || form.dataset.submitted === 'true') {
             return;
           }
           const status = form.querySelector('[data-contact-status]');
           const submit = form.querySelector('button[type="submit"]');
+          const controls = Array.from(form.querySelectorAll('input, select, textarea, button'));
           const overlay = document.querySelector('[data-contact-submit-overlay]');
           const showOverlay = () => {
             if (!overlay) {
@@ -686,6 +687,7 @@
             submit.disabled = true;
           }
 
+          let submitted = false;
           try {
             const response = await fetch('/api/contact', {
               method: 'POST',
@@ -701,6 +703,15 @@
             delete status.dataset.state;
             if (result.code === 'CONTACT_INQUIRY_RECORDED') {
               status.textContent = form.dataset.recordedMessage || result.message;
+              submitted = true;
+              form.classList.add('is-submitted');
+              form.dataset.submitted = 'true';
+              controls.forEach((control) => {
+                control.disabled = true;
+              });
+              if (submit) {
+                submit.textContent = form.dataset.submittedLabel || 'Request submitted';
+              }
             } else if (result.code === 'VALIDATION_ERROR') {
               status.textContent = form.dataset.validationMessage || result.message;
             } else if (result.code === 'TURNSTILE_VALIDATION_FAILED') {
@@ -729,7 +740,7 @@
             hideOverlay();
             delete form.dataset.pending;
             form.removeAttribute('aria-busy');
-            if (submit) {
+            if (submit && !submitted) {
               submit.disabled = false;
             }
           }

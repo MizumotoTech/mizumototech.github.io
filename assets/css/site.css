@@ -1265,6 +1265,31 @@ h3 {
   outline-offset: 1px;
 }
 
+.contact-form.is-submitted {
+  border-color: rgba(174, 187, 208, 0.2);
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.contact-form.is-submitted .contact-field input,
+.contact-form.is-submitted .contact-field select,
+.contact-form.is-submitted .contact-field textarea {
+  border-color: rgba(174, 187, 208, 0.18);
+  background: rgba(226, 232, 240, 0.86);
+  color: var(--muted-strong);
+  cursor: not-allowed;
+}
+
+.contact-form.is-submitted .contact-consent,
+.contact-form.is-submitted .contact-turnstile {
+  opacity: 0.62;
+}
+
+.contact-form.is-submitted .contact-submit {
+  cursor: default;
+  opacity: 0.68;
+  transform: none;
+}
+
 .contact-consent {
   display: grid;
   grid-template-columns: 18px minmax(0, 1fr);

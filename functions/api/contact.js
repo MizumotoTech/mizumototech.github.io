@@ -299,7 +299,7 @@ export async function onRequest({ request, env }) {
     {
       ok: true,
       code: "CONTACT_INQUIRY_RECORDED",
-      message: "Your request has been recorded. Internal notification status is tracked separately.",
+      message: "Your request has been received. I will review the scope and follow up if it is a fit.",
       id
     },
     200

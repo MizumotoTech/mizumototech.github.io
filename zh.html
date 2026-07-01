@@ -403,14 +403,14 @@
             <p class="eyebrow">联系</p>
             <h2 id="contact-title">先做边界清晰的评审，而不是开放式顾问投入。</h2>
             <p>
-              可以先提供当前云环境基线、交付流程，以及最想降低的第一个运营风险。
-              商务条件会根据合作模式、交付边界和响应预期确定。
+              简单说明你的云可靠性、成本、架构或交接问题。
+              我会评估范围，如适合会后续联系。
             </p>
           </div>
           <form
             class="contact-form"
             data-contact-form
-            data-recorded-message="你的请求已记录，但内部通知尚未启用。"
+            data-recorded-message="你的请求已收到。我会评估范围，如适合会后续联系。"
             data-validation-message="请填写必填项。"
             data-turnstile-message="人机验证失败，请重试。"
             data-storage-message="联系请求暂时无法记录。"
@@ -418,12 +418,13 @@
             data-config-message="联系表单验证尚未配置。"
             data-error-message="联系表单接口暂时无法访问，请稍后再试。"
             data-pending-message="正在提交……"
+            data-submitted-label="已提交"
             aria-describedby="contact-form-note contact-form-status"
           >
             <div class="contact-form-heading">
               <span>Scope first</span>
               <strong>申请评审</strong>
-              <p id="contact-form-note">当前表单会记录通过验证的请求，但内部通知尚未启用。</p>
+              <p id="contact-form-note">请提供足够上下文，以判断是否适合做边界清晰的评审。</p>
             </div>
             <div class="contact-form-grid">
               <div class="contact-field">
@@ -458,7 +459,7 @@
             </div>
             <div class="contact-consent">
               <input id="contact-consent" name="consent" type="checkbox" required>
-              <label for="contact-consent">我理解当前内部通知尚未启用。</label>
+              <label for="contact-consent">我理解该请求会先进行范围评估，并不代表合作已经开始。</label>
             </div>
             <div class="contact-turnstile">
               <div class="cf-turnstile" data-sitekey="0x4AAAAAADslGqz8lpWh-Kw8"></div>
@@ -609,11 +610,12 @@
       document.querySelectorAll('[data-contact-form]').forEach((form) => {
         form.addEventListener('submit', async (event) => {
           event.preventDefault();
-          if (form.dataset.pending === 'true') {
+          if (form.dataset.pending === 'true' || form.dataset.submitted === 'true') {
             return;
           }
           const status = form.querySelector('[data-contact-status]');
           const submit = form.querySelector('button[type="submit"]');
+          const controls = Array.from(form.querySelectorAll('input, select, textarea, button'));
           const overlay = document.querySelector('[data-contact-submit-overlay]');
           const showOverlay = () => {
             if (!overlay) {
@@ -669,6 +671,7 @@
             submit.disabled = true;
           }
 
+          let submitted = false;
           try {
             const response = await fetch('/api/contact', {
               method: 'POST',
@@ -684,6 +687,15 @@
             delete status.dataset.state;
             if (result.code === 'CONTACT_INQUIRY_RECORDED') {
               status.textContent = form.dataset.recordedMessage || result.message;
+              submitted = true;
+              form.classList.add('is-submitted');
+              form.dataset.submitted = 'true';
+              controls.forEach((control) => {
+                control.disabled = true;
+              });
+              if (submit) {
+                submit.textContent = form.dataset.submittedLabel || '已提交';
+              }
             } else if (result.code === 'VALIDATION_ERROR') {
               status.textContent = form.dataset.validationMessage || result.message;
             } else if (result.code === 'TURNSTILE_VALIDATION_FAILED') {
@@ -712,7 +724,7 @@
             hideOverlay();
             delete form.dataset.pending;
             form.removeAttribute('aria-busy');
-            if (submit) {
+            if (submit && !submitted) {
               submit.disabled = false;
             }
           }
