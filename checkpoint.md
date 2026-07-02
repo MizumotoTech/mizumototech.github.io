@@ -369,6 +369,56 @@
 ## Next Actions
 
 - Checkpoint 008: Production Domain and DNS Cutover Planning.
+
+# Checkpoint 009 - Homepage and Sales Page Contact Path Cleanup
+
+## Produced
+
+- Updated English homepage contact copy to direct users to the live contact form.
+- Added service and entry-pack CTA links from the English homepage to `#contact`.
+- Added equivalent Chinese homepage service and entry-pack CTA links to `#contact`.
+- Updated English and Chinese company location facts to distinguish registered base from Japan-side execution without claiming a Tokyo office.
+- Updated canonical sales sheet Markdown and generated HTML contact CTAs to use `/#contact`.
+- Updated sales concept pages `v1`, `v2`, and `v3` so contact CTAs use `/#contact` instead of local email placeholders.
+- Replaced sales-page obfuscated email contact boxes with contact-form CTA links.
+- Added a stable extensionless sales route at `sales/mizumoto-tech-one-page-appeal-sheet/index.html`.
+- Updated `sales/index.html` to point to the extensionless sales sheet route.
+- Removed the stale one-page appeal sheet PDF artifact because no finalized PDF export workflow exists in the repository.
+
+## Verified
+
+- `git diff --check` passes.
+- Inline scripts in `index.html`, `zh.html`, and `docs.html` parse successfully.
+- `functions/api/contact.js` and `db/contact_inquiries.sql` have no diff.
+- Search confirms no `mailto:`, obfuscated email, `replace # with @`, or old sales PDF link remains in public homepage, docs, or sales pages.
+- Browser preview confirms the English homepage contact copy points to the form, service CTAs route to `#contact`, and no old email contact copy remains.
+- Browser preview confirms the Chinese homepage has matching contact-form CTAs and safer location wording.
+- Browser preview confirms the extensionless sales route opens and resolves to the generated sales sheet.
+- Browser preview confirms the sales sheet contact CTAs point to `/#contact`, with no old email or PDF link visible.
+- Local file checks confirm the stale PDF artifact is removed and the extensionless route file exists.
+
+## Known Gaps
+
+- No full Privacy Notice page yet.
+- No customer auto-reply.
+- No admin dashboard.
+- No formal CRM.
+- No finalized PDF export workflow for the one-page appeal sheet.
+- Bundle/combo package positioning remains under review.
+
+## Bugs Caught
+
+- Sales concept pages still exposed an obfuscated email pattern even after the main contact form became live.
+- The homepage service-card flow explained service packs but did not give users a direct path from service interest to the live form.
+- The sales sheet had an extension-based route but no stable directory route for `/sales/mizumoto-tech-one-page-appeal-sheet`.
+- A stale generated PDF artifact existed without a maintained export workflow.
+
+## Next Actions
+
+- Minimal Privacy Notice.
+- Optional one-page appeal sheet PDF export workflow.
+- Optional homepage service-package CTA refinement.
+- Optional rate-limit hardening.
 - Optional later: rate-limit hardening.
 - Optional later: admin/review workflow.
 

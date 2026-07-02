@@ -103,4 +103,4 @@ is scoped separately.
 
 ## Contact
 
-**[Contact form](https://www.mizumoto.tech/#contact)**
+**[Request a scoped review](/#contact)**

@@ -673,10 +673,21 @@ img {
 }
 
 .contact-box {
+  display: block;
   padding: 26px;
   border: 1px solid rgba(245, 247, 250, 0.16);
   border-radius: 8px;
   background: rgba(245, 247, 250, 0.07);
+  color: #f5f7fa;
+  text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease, transform 160ms ease;
+}
+
+.contact-box:hover,
+.contact-box:focus-visible {
+  border-color: rgba(245, 247, 250, 0.32);
+  background: rgba(245, 247, 250, 0.11);
+  transform: translateY(-1px);
 }
 
 .contact-box span {
